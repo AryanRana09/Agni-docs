@@ -1,0 +1,81 @@
+---
+title: 'List Purchased Numbers'
+api: 'GET /api/v1/list-phone-numbers?region=string&isoCountry=string&isActive=true'
+---
+
+Endpoint to list purchased numbers.
+
+### Headers
+
+<ParamField header="Authorization" type="string" required>
+  Bearer \&lt;token\&gt;
+</ParamField>
+<ParamField header="Content-Type" type="string" required>
+  application/json
+</ParamField>
+<ParamField header="Accept" type="string" required>
+  application/json
+</ParamField>
+
+
+
+### Responses
+
+<ResponseGroup>
+
+<ResponseExample name="200 OK">
+```json
+{
+  "success": true,
+  "message": "string",
+  "data": [
+    {
+      "id": "string",
+      "telephonyId": "string",
+      "subscriptionId": "string",
+      "inboundTrunkId": "string",
+      "outboundTrunkId": "string",
+      "number": "string",
+      "friendlyName": "string",
+      "perMinutePriceInbound": 0,
+      "perMinutePriceOutbound": 0,
+      "price": 0,
+      "region": "string",
+      "isoCountry": "string",
+      "isActive": true,
+      "createdAt": "string",
+      "updatedAt": "string"
+    }
+  ]
+}
+```
+</ResponseExample>
+
+<ResponseExample name="400 Bad Request">
+```json
+{
+  "success": false,
+  "message": "Validation failed for the request payload."
+}
+```
+</ResponseExample>
+
+<ResponseExample name="404 Not Found">
+```json
+{
+  "success": false,
+  "message": "The requested resource could not be found."
+}
+```
+</ResponseExample>
+
+<ResponseExample name="500 Internal Error">
+```json
+{
+  "success": false,
+  "message": "An unexpected internal server error occurred."
+}
+```
+</ResponseExample>
+
+</ResponseGroup>

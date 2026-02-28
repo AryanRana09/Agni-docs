@@ -1,0 +1,67 @@
+---
+title: 'Release Phone Number'
+api: 'DELETE /api/v1/phone-numbers/{phone_number}/release'
+---
+
+Endpoint to release phone number.
+
+### Headers
+
+<ParamField header="Authorization" type="string" required>
+  Bearer \&lt;token\&gt;
+</ParamField>
+<ParamField header="Content-Type" type="string" required>
+  application/json
+</ParamField>
+<ParamField header="Accept" type="string" required>
+  application/json
+</ParamField>
+
+
+
+### Responses
+
+<ResponseGroup>
+
+<ResponseExample name="200 OK">
+```json
+{
+  "success": true,
+  "message": "string",
+  "data": {
+    "phoneNumber": "string",
+    "status": "string",
+    "releasedAt": "string"
+  }
+}
+```
+</ResponseExample>
+
+<ResponseExample name="400 Bad Request">
+```json
+{
+  "success": false,
+  "message": "Validation failed for the request payload."
+}
+```
+</ResponseExample>
+
+<ResponseExample name="404 Not Found">
+```json
+{
+  "success": false,
+  "message": "The requested resource could not be found."
+}
+```
+</ResponseExample>
+
+<ResponseExample name="500 Internal Error">
+```json
+{
+  "success": false,
+  "message": "An unexpected internal server error occurred."
+}
+```
+</ResponseExample>
+
+</ResponseGroup>

@@ -57,12 +57,46 @@
             ]
           },
           {
-            "group": "Endpoint examples",
+            "group": "Agent",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "api-reference/agents/get",
+              "api-reference/agents/list",
+              "api-reference/agents/create",
+              "api-reference/agents/update",
+              "api-reference/agents/update-status",
+              "api-reference/agents/delete"
+            ]
+          },
+          {
+            "group": "Agent Tool",
+            "pages": [
+              "api-reference/tools/get",
+              "api-reference/tools/list",
+              "api-reference/tools/create",
+              "api-reference/tools/update",
+              "api-reference/tools/delete"
+            ]
+          },
+          {
+            "group": "Widget Settings",
+            "pages": [
+              "api-reference/widget-settings/get",
+              "api-reference/widget-settings/list",
+              "api-reference/widget-settings/create",
+              "api-reference/widget-settings/update",
+              "api-reference/widget-settings/delete"
+            ]
+          },
+          {
+            "group": "Telephony",
+            "pages": [
+              "api-reference/telephony/list-available-numbers",
+              "api-reference/telephony/buy-number",
+              "api-reference/telephony/release-number",
+              "api-reference/telephony/list-purchased-numbers",
+              "api-reference/telephony/import-number",
+              "api-reference/telephony/create-telephony",
+              "api-reference/telephony/list-twilio-numbers"
             ]
           }
         ]
@@ -102,15 +136,15 @@
   },
   "contextual": {
     "options": [
-     "copy",
-     "view",
-     "chatgpt",
-     "claude",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
-   ]
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "perplexity",
+      "mcp",
+      "cursor",
+      "vscode"
+    ]
   },
   "footer": {
     "socials": {

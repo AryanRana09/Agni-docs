@@ -1,0 +1,84 @@
+---
+title: 'Import Phone Number'
+api: 'POST /api/v1/phone-numbers/import'
+---
+
+Endpoint to import phone number.
+
+### Headers
+
+<ParamField header="Authorization" type="string" required>
+  Bearer \&lt;token\&gt;
+</ParamField>
+<ParamField header="Content-Type" type="string" required>
+  application/json
+</ParamField>
+<ParamField header="Accept" type="string" required>
+  application/json
+</ParamField>
+
+### Body
+
+```json
+{
+  "phone": "string",
+  "type": "string",
+  "name": "string",
+  "terminationUri": "string",
+  "sipUsername": "string",
+  "sipPassword": "string"
+}
+```
+
+### Responses
+
+<ResponseGroup>
+
+<ResponseExample name="200 OK">
+```json
+{
+  "success": true,
+  "message": "string",
+  "data": {
+    "id": "string",
+    "phone": "string",
+    "type": "string",
+    "name": "string",
+    "terminationUri": "string",
+    "sipUsername": "string",
+    "sipPassword": "string",
+    "status": "string",
+    "createdAt": "string"
+  }
+}
+```
+</ResponseExample>
+
+<ResponseExample name="400 Bad Request">
+```json
+{
+  "success": false,
+  "message": "Validation failed for the request payload."
+}
+```
+</ResponseExample>
+
+<ResponseExample name="404 Not Found">
+```json
+{
+  "success": false,
+  "message": "The requested resource could not be found."
+}
+```
+</ResponseExample>
+
+<ResponseExample name="500 Internal Error">
+```json
+{
+  "success": false,
+  "message": "An unexpected internal server error occurred."
+}
+```
+</ResponseExample>
+
+</ResponseGroup>
