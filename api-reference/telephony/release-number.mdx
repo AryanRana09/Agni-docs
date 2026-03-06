@@ -1,67 +1,78 @@
 ---
-title: 'Release Phone Number'
-api: 'DELETE /api/v1/phone-numbers/{phone_number}/release'
+title: "Release Phone Number"
+openapi: "DELETE /api/v1/phone-numbers/{phone_number}/release"
+description: "Release a previously purchased phone number."
 ---
 
-Endpoint to release phone number.
+### Overview
 
-### Headers
+Use this endpoint to **release a phone number** that you previously purchased so it is no longer associated with your account.
 
-<ParamField header="Authorization" type="string" required>
-  Bearer \&lt;token\&gt;
-</ParamField>
-<ParamField header="Content-Type" type="string" required>
-  application/json
-</ParamField>
-<ParamField header="Accept" type="string" required>
-  application/json
-</ParamField>
+The base URL for all requests from the playground is `https://api.ravan.ai/api/v1`.
 
+### Authorization
 
+- **Authorization**: `Bearer YOUR_API_KEY` (header, required)  
+  Example: `Authorization: Bearer sk_live_xxx`
 
-### Responses
+### HTTP request
 
-<ResponseGroup>
+- **Method**: `DELETE`  
+- **Path**: `/phone-numbers/{phone_number}/release`
 
-<ResponseExample name="200 OK">
-```json
+### Path parameters
+
+| Name           | Type   | Required | Description                                      | Example           |
+| -------------- | ------ | -------- | ------------------------------------------------ | ----------------- |
+| `phone_number` | string | Yes      | Phone number to release, in E.164 format.       | `"+14157774444"`  |
+
+### Successful response (200)
+
+On success, the API returns information about the released number.
+
+#### Top-level fields
+
+| Field     | Type                 | Description                                   |
+| --------- | -------------------- | --------------------------------------------- |
+| `success` | boolean              | Indicates whether the request was successful. |
+| `message` | string               | Human-readable message about the operation.   |
+| `data`    | ReleasedPhoneNumber  | Released phone number details.                |
+
+#### `ReleasedPhoneNumber` object
+
+| Field           | Type   | Description                                          | Example            |
+| -------------- | ------ | ---------------------------------------------------- | ------------------ |
+| `phone_number` | string | Released phone number in E.164 format.              | `"+14157774444"`   |
+| `status`       | string | Status of the number after release (for example, `"released"`). | `"released"` |
+| `released_at`  | string | ISO 8601 timestamp when the number was released.    | `"2024-01-01T01:00:00Z"` |
+
+<ResponseExample>
+
+```json 200 - Success
 {
   "success": true,
-  "message": "string",
+  "message": "Phone number released successfully.",
   "data": {
-    "phoneNumber": "string",
-    "status": "string",
-    "releasedAt": "string"
+    "phone_number": "+14157774444",
+    "status": "released",
+    "released_at": "2024-01-01T01:00:00Z"
   }
 }
 ```
-</ResponseExample>
 
-<ResponseExample name="400 Bad Request">
-```json
+```json 404 - Not found
 {
   "success": false,
-  "message": "Validation failed for the request payload."
+  "message": "Phone number not found or already released."
 }
 ```
-</ResponseExample>
 
-<ResponseExample name="404 Not Found">
-```json
-{
-  "success": false,
-  "message": "The requested resource could not be found."
-}
-```
-</ResponseExample>
-
-<ResponseExample name="500 Internal Error">
-```json
+```json 500 - Server error
 {
   "success": false,
   "message": "An unexpected internal server error occurred."
 }
 ```
+
 </ResponseExample>
 
-</ResponseGroup>

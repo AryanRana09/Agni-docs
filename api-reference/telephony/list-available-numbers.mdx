@@ -1,71 +1,98 @@
 ---
-title: 'List Available Numbers'
-api: 'GET /api/v1/available-numbers/{iso_country}?pageSize=10&region=string'
+title: "List Available Numbers"
+openapi: "GET /api/v1/available-numbers/{iso_country}"
+description: "Retrieve a list of available phone numbers you can purchase."
 ---
 
-Endpoint to list available numbers.
+### Overview
 
-### Headers
+Use this endpoint to **list available phone numbers** for a given country, with optional filtering by region and pagination.
 
-<ParamField header="Authorization" type="string" required>
-  Bearer \&lt;token\&gt;
-</ParamField>
-<ParamField header="Content-Type" type="string" required>
-  application/json
-</ParamField>
-<ParamField header="Accept" type="string" required>
-  application/json
-</ParamField>
+The base URL for all requests from the playground is `https://api.ravan.ai/api/v1`.
 
+### Authorization
 
+- **Authorization**: `Bearer YOUR_API_KEY` (header, required)  
+  Example: `Authorization: Bearer sk_live_xxx`
 
-### Responses
+### HTTP request
 
-<ResponseGroup>
+- **Method**: `GET`  
+- **Path**: `/available-numbers/{iso_country}`
 
-<ResponseExample name="200 OK">
-```json
+### Path parameters
+
+| Name         | Type    | Required | Description                                                                 | Example   |
+| ------------ | ------- | -------- | --------------------------------------------------------------------------- | --------- |
+| `iso_country` | string | Yes      | Two-letter ISO country code for which to list available numbers.           | `"US"`    |
+
+### Query parameters
+
+| Name        | Type   | Required | Description                                                                                  | Example     |
+| ----------- | ------ | -------- | -------------------------------------------------------------------------------------------- | ----------- |
+| `pageSize`  | int32 | No       | Maximum number of phone numbers to return in a single page.                                  | `20`        |
+| `region`    | string | No      | Region or area within the country to filter numbers by (for example, state or city prefix). | `"CA"`      |
+
+### Successful response (200)
+
+On success, the API returns a JSON object with a list of available numbers.
+
+#### Top-level fields
+
+| Field      | Type                | Description                                   |
+| ---------- | ------------------- | --------------------------------------------- |
+| `success`  | boolean             | Indicates whether the request was successful. |
+| `message`  | string              | Human-readable message about the operation.   |
+| `data`     | array\<PhoneNumber> | List of available phone numbers.             |
+
+#### `PhoneNumber` object
+
+| Field                       | Type   | Description                                                  | Example        |
+| -------------------------- | ------ | ------------------------------------------------------------ | -------------- |
+| `iso_country`              | string | Two-letter ISO country code.                                | `"US"`         |
+| `phone_number`             | string | Phone number in E.164 format.                               | `"+14157774444"` |
+| `price`                    | int32  | One-time purchase price for the number (in minor units).    | `100`          |
+| `per_minute_price_outbound` | int32 | Per-minute outbound price for calls using this number.      | `2`            |
+| `per_minute_price_inbound`  | int32 | Per-minute inbound price for calls to this number.          | `1`            |
+
+<ResponseExample>
+
+```json 200 - Success
 {
   "success": true,
-  "message": "string",
+  "message": "Available numbers retrieved successfully.",
   "data": [
     {
-      "isoCountry": "string",
-      "phoneNumber": "string",
-      "price": 0,
-      "perMinutePriceOutbound": 0,
-      "perMinutePriceInbound": 0
+      "iso_country": "US",
+      "phone_number": "+14157774444",
+      "price": 100,
+      "per_minute_price_outbound": 2,
+      "per_minute_price_inbound": 1
+    },
+    {
+      "iso_country": "US",
+      "phone_number": "+14157775555",
+      "price": 100,
+      "per_minute_price_outbound": 2,
+      "per_minute_price_inbound": 1
     }
   ]
 }
 ```
-</ResponseExample>
 
-<ResponseExample name="400 Bad Request">
-```json
+```json 400 - Validation error
 {
   "success": false,
-  "message": "Validation failed for the request payload."
+  "message": "Invalid iso_country. Must be a 2-letter ISO code."
 }
 ```
-</ResponseExample>
 
-<ResponseExample name="404 Not Found">
-```json
-{
-  "success": false,
-  "message": "The requested resource could not be found."
-}
-```
-</ResponseExample>
-
-<ResponseExample name="500 Internal Error">
-```json
+```json 500 - Server error
 {
   "success": false,
   "message": "An unexpected internal server error occurred."
 }
 ```
+
 </ResponseExample>
 
-</ResponseGroup>

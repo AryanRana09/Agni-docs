@@ -1,101 +1,93 @@
 ---
-title: 'List Agents'
-api: 'GET /api/v1/agents?organizationId=string&limit=10&offset=0'
+title: "List Agents"
+openapi: "GET /api/v1/agents"
+description: "List all agents for an organization."
 ---
 
-Endpoint to list agents.
+### Overview
 
-### Headers
+Use this endpoint to **list agents** belonging to a specific organization with basic pagination.
 
-<ParamField header="Authorization" type="string" required>
-  Bearer \&lt;token\&gt;
-</ParamField>
-<ParamField header="Content-Type" type="string" required>
-  application/json
-</ParamField>
-<ParamField header="Accept" type="string" required>
-  application/json
-</ParamField>
+The base URL for all requests from the playground is `https://api.ravan.ai/api/v1`.
 
+### Authorization
 
+- **Authorization**: `Bearer YOUR_API_KEY` (header, required)  
+  Example: `Authorization: Bearer sk_live_xxx`
 
-### Responses
+### HTTP request
 
-<ResponseGroup>
+- **Method**: `GET`  
+- **Path**: `/agents`
 
-<ResponseExample name="200 OK">
-```json
+### Query parameters
+
+| Name             | Type   | Required | Description                                      | Example    |
+| ---------------- | ------ | -------- | ------------------------------------------------ | ---------- |
+| `organizationId` | string | Yes      | Organization identifier to list agents for.      | `"org_123"` |
+| `limit`          | int32  | No       | Maximum number of agents to return.              | `10`       |
+| `offset`         | int32  | No       | Number of agents to skip for pagination.         | `0`        |
+
+### Successful response (200)
+
+On success, the API returns a list of agents with pagination metadata.
+
+#### Top-level fields
+
+| Field     | Type          | Description                                   |
+| --------- | ------------- | --------------------------------------------- |
+| `success` | boolean       | Indicates whether the request was successful. |
+| `message` | string        | Human-readable message about the operation.   |
+| `data`    | array\<Agent> | List of agents.                               |
+| `meta`    | Meta          | Pagination metadata.                          |
+
+#### `Meta` object
+
+| Field    | Type  | Description                             | Example |
+| -------- | ----- | --------------------------------------- | ------- |
+| `total`  | int64 | Total number of matching agents.        | `42`    |
+| `limit`  | int32 | Maximum number of agents per page.      | `10`    |
+| `offset` | int32 | Offset for the current page.            | `0`     |
+
+<ResponseExample>
+
+```json 200 - Success
 {
   "success": true,
-  "message": "string",
+  "message": "Agents retrieved successfully.",
   "data": [
     {
-      "id": "string(int64)",
-      "organizationId": "string",
-      "widgetSettingsId": "string(int64)",
-      "name": "string",
-      "agentName": "string",
+      "id": 123,
+      "organization_id": "org_123",
+      "name": "support-agent",
+      "agent_name": "Support Agent",
       "status": "AGENT_STATUS_ACTIVE",
-      "model": "string",
-      "s2sModel": "string",
-      "voiceId": "string",
-      "temperature": 0.7,
-      "reminderTriggerMs": 0,
-      "reminderMaxCount": 0,
-      "ambientSound": "string",
-      "ambientSoundVolume": 0.5,
-      "endCallAfterSilence": true,
-      "maxCallDurationMs": 0,
-      "ringDurationMs": 0,
-      "enableVoicemailDetection": true,
-      "voicemailMessage": "string",
-      "voicemailDetectionTimeoutMs": 0,
-      "ivrOptions": { "custom": "object" },
-      "postCallAnalysisModel": "string",
-      "analysisSummaryPrompt": "string",
-      "selectedTools": { "custom": "object" },
-      "integrations": { "custom": "object" },
-      "knowledgeBase": "string",
-      "beginMessage": "string",
-      "startSpeaker": "string",
-      "createdAt": "string",
-      "updatedAt": "string"
+      "model": "gpt-4.1",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-02T00:00:00Z"
     }
   ],
   "meta": {
-    "total": "string(int64)",
+    "total": 1,
     "limit": 10,
     "offset": 0
   }
 }
 ```
-</ResponseExample>
 
-<ResponseExample name="400 Bad Request">
-```json
+```json 400 - Validation error
 {
   "success": false,
-  "message": "Validation failed for the request payload."
+  "message": "organizationId is required."
 }
 ```
-</ResponseExample>
 
-<ResponseExample name="404 Not Found">
-```json
-{
-  "success": false,
-  "message": "The requested resource could not be found."
-}
-```
-</ResponseExample>
-
-<ResponseExample name="500 Internal Error">
-```json
+```json 500 - Server error
 {
   "success": false,
   "message": "An unexpected internal server error occurred."
 }
 ```
+
 </ResponseExample>
 
-</ResponseGroup>

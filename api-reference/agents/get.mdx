@@ -1,94 +1,118 @@
 ---
-title: 'Get Agent'
-api: 'GET /api/v1/agents/{id}?organizationId=string'
+title: "Get Agent"
+openapi: "GET /api/v1/agents/{id}"
+description: "Retrieve a single agent by ID."
 ---
 
-Endpoint to get agent.
+### Overview
 
-### Headers
+Use this endpoint to **retrieve a single agent** by its ID for a specific organization.
 
-<ParamField header="Authorization" type="string" required>
-  Bearer \&lt;token\&gt;
-</ParamField>
-<ParamField header="Content-Type" type="string" required>
-  application/json
-</ParamField>
-<ParamField header="Accept" type="string" required>
-  application/json
-</ParamField>
+The base URL for all requests from the playground is `https://api.ravan.ai/api/v1`.
 
+### Authorization
 
+- **Authorization**: `Bearer YOUR_API_KEY` (header, required)  
+  Example: `Authorization: Bearer sk_live_xxx`
 
-### Responses
+### HTTP request
 
-<ResponseGroup>
+- **Method**: `GET`  
+- **Path**: `/agents/{id}`
 
-<ResponseExample name="200 OK">
-```json
+### Path parameters
+
+| Name | Type  | Required | Description                | Example |
+| ---- | ----- | -------- | -------------------------- | ------- |
+| `id` | int64 | Yes      | Unique identifier of agent | `123`   |
+
+### Query parameters
+
+| Name              | Type   | Required | Description                                      | Example          |
+| ----------------- | ------ | -------- | ------------------------------------------------ | ---------------- |
+| `organizationId`  | string | Yes      | Organization identifier that owns the agent.     | `"org_123"`      |
+
+### Successful response (200)
+
+On success, the API returns the requested agent.
+
+#### Top-level fields
+
+| Field     | Type   | Description                                   |
+| --------- | ------ | --------------------------------------------- |
+| `success` | boolean | Indicates whether the request was successful. |
+| `message` | string  | Human-readable message about the operation.   |
+| `data`    | Agent   | Agent details.                                |
+
+#### `Agent` object
+
+The Agent object corresponds to the `Agent` message in the service definition.
+
+Key fields:
+
+- **id** (int64): Unique identifier of the agent.  
+- **organization_id** (string): Identifier of the owning organization.  
+- **widget_settings_id** (int64, optional): Associated widget settings configuration.  
+- **name** (string, optional): Internal name of the agent.  
+- **agent_name** (string, optional): Display name of the agent.  
+- **status** (enum): Current status of the agent: `AGENT_STATUS_ACTIVE` or `AGENT_STATUS_INACTIVE`.  
+- **model**, **s2s_model**, **voice_id** (string, optional): Model and voice configuration.  
+- Additional configuration fields controlling temperature, reminders, ambient sound, call behavior, IVR options, tool selection, integrations, knowledge base, prompts, and timestamps.
+
+<ResponseExample>
+
+```json 200 - Success
 {
   "success": true,
-  "message": "string",
+  "message": "Agent retrieved successfully.",
   "data": {
-    "id": "string(int64)",
-    "organizationId": "string",
-    "widgetSettingsId": "string(int64)",
-    "name": "string",
-    "agentName": "string",
+    "id": 123,
+    "organization_id": "org_123",
+    "widget_settings_id": 10,
+    "name": "support-agent",
+    "agent_name": "Support Agent",
     "status": "AGENT_STATUS_ACTIVE",
-    "model": "string",
-    "s2sModel": "string",
-    "voiceId": "string",
+    "model": "gpt-4.1",
+    "s2s_model": "realtime-model",
+    "voice_id": "voice_123",
     "temperature": 0.7,
-    "reminderTriggerMs": 0,
-    "reminderMaxCount": 0,
-    "ambientSound": "string",
-    "ambientSoundVolume": 0.5,
-    "endCallAfterSilence": true,
-    "maxCallDurationMs": 0,
-    "ringDurationMs": 0,
-    "enableVoicemailDetection": true,
-    "voicemailMessage": "string",
-    "voicemailDetectionTimeoutMs": 0,
-    "ivrOptions": { "custom": "object" },
-    "postCallAnalysisModel": "string",
-    "analysisSummaryPrompt": "string",
-    "selectedTools": { "custom": "object" },
-    "integrations": { "custom": "object" },
-    "knowledgeBase": "string",
-    "beginMessage": "string",
-    "startSpeaker": "string",
-    "createdAt": "string",
-    "updatedAt": "string"
+    "reminder_trigger_ms": 30000,
+    "reminder_max_count": 2,
+    "ambient_sound": "office",
+    "ambient_sound_volume": 0.4,
+    "end_call_after_silence": true,
+    "max_call_duration_ms": 600000,
+    "ring_duration_ms": 15000,
+    "enable_voicemail_detection": true,
+    "voicemail_message": "Sorry we missed you.",
+    "voicemail_detection_timeout_ms": 45000,
+    "ivr_options": {},
+    "post_call_analysis_model": "gpt-4.1",
+    "analysis_summary_prompt": "Summarize the call.",
+    "selected_tools": {},
+    "integrations": {},
+    "knowledge_base": "kb_123",
+    "begin_message": "Hi, how can I help you today?",
+    "start_speaker": "agent",
+    "created_at": "2024-01-01T00:00:00Z",
+    "updated_at": "2024-01-02T00:00:00Z"
   }
 }
 ```
-</ResponseExample>
 
-<ResponseExample name="400 Bad Request">
-```json
+```json 404 - Not found
 {
   "success": false,
-  "message": "Validation failed for the request payload."
+  "message": "Agent not found."
 }
 ```
-</ResponseExample>
 
-<ResponseExample name="404 Not Found">
-```json
-{
-  "success": false,
-  "message": "The requested resource could not be found."
-}
-```
-</ResponseExample>
-
-<ResponseExample name="500 Internal Error">
-```json
+```json 500 - Server error
 {
   "success": false,
   "message": "An unexpected internal server error occurred."
 }
 ```
+
 </ResponseExample>
 
-</ResponseGroup>

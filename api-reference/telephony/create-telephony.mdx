@@ -1,83 +1,114 @@
 ---
-title: 'Create Telephony Type'
-api: 'POST /api/v1/create/telephony'
+title: "Create Telephony Type"
+openapi: "POST /api/v1/create/telephony"
+description: "Create a new telephony configuration for connecting external providers."
 ---
 
-Endpoint to create telephony type.
+### Overview
 
-### Headers
+Use this endpoint to **create a telephony configuration** that defines how calls are routed through an external provider.
 
-<ParamField header="Authorization" type="string" required>
-  Bearer \&lt;token\&gt;
-</ParamField>
-<ParamField header="Content-Type" type="string" required>
-  application/json
-</ParamField>
-<ParamField header="Accept" type="string" required>
-  application/json
-</ParamField>
+The base URL for all requests from the playground is `https://api.ravan.ai/api/v1`.
 
-### Body
+### Authorization
 
-```json
-{
-  "type": "string",
-  "ownerType": "string",
-  "friendlyName": "string",
-  "clientId": "string",
-  "clientSecret": "string"
-}
+- **Authorization**: `Bearer YOUR_API_KEY` (header, required)  
+  Example: `Authorization: Bearer sk_live_xxx`
+
+### HTTP request
+
+- **Method**: `POST`  
+- **Path**: `/create/telephony`
+
+### Request body
+
+Send a JSON object with the following fields.
+
+| Field           | Type   | Required | Description                                                       | Example             |
+| --------------- | ------ | -------- | ----------------------------------------------------------------- | ------------------- |
+| `type`          | string | Yes      | Telephony type identifier (for example, `"sip"` or `"pstn"`).    | `"sip"`             |
+| `owner_type`    | string | Yes      | Type of owner associated with this telephony configuration.       | `"organization"`    |
+| `friendly_name` | string | Yes      | Human-readable name for the telephony configuration.             | `"Primary SIP"`     |
+| `client_id`     | string | Yes      | Client ID used to authenticate with the telephony provider.      | `"client_123"`      |
+| `client_secret` | string | Yes      | Client secret used to authenticate with the telephony provider.  | `"secret_123"`      |
+
+<RequestExample>
+
+```bash 201 - Create telephony type
+curl --request POST \
+  --url https://api.ravan.ai/api/v1/create/telephony \
+  --header 'Authorization: Bearer YOUR_API_KEY' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "type": "sip",
+    "owner_type": "organization",
+    "friendly_name": "Primary SIP",
+    "client_id": "client_123",
+    "client_secret": "secret_123"
+  }'
 ```
 
-### Responses
+</RequestExample>
 
-<ResponseGroup>
+### Successful response (201)
 
-<ResponseExample name="200 OK">
-```json
+On success, the API returns the created telephony configuration.
+
+#### Top-level fields
+
+| Field     | Type          | Description                                   |
+| --------- | ------------- | --------------------------------------------- |
+| `success` | boolean       | Indicates whether the request was successful. |
+| `message` | string        | Human-readable message about the operation.   |
+| `data`    | TelephonyType | Telephony configuration details.              |
+
+#### `TelephonyType` object
+
+| Field            | Type   | Description                                                   | Example               |
+| ---------------- | ------ | ------------------------------------------------------------- | --------------------- |
+| `id`             | string | Unique identifier for the telephony configuration.           | `"tel_123"`           |
+| `type`           | string | Telephony type identifier.                                   | `"sip"`               |
+| `owner_type`     | string | Type of owner associated with this telephony configuration.  | `"organization"`      |
+| `friendly_name`  | string | Human-readable name for the telephony configuration.         | `"Primary SIP"`       |
+| `status`         | string | Current status of the telephony configuration.               | `"active"`            |
+| `created_at`     | string | ISO 8601 timestamp when the configuration was created.       | `"2024-01-01T00:00:00Z"` |
+| `termination_uri`| string | Default termination URI, if available.                       | `"sip:support@example.com"` |
+| `sip_username`   | string | SIP username used for this configuration, if applicable.     | `"support-user"`      |
+| `sip_password`   | string | SIP password used for this configuration, if applicable.     | `"strong-password"`   |
+
+<ResponseExample>
+
+```json 201 - Created
 {
   "success": true,
-  "message": "string",
+  "message": "Telephony configuration created successfully.",
   "data": {
-    "id": "string",
-    "type": "string",
-    "ownerType": "string",
-    "friendlyName": "string",
-    "status": "string",
-    "createdAt": "string",
-    "terminationUri": "string",
-    "sipUsername": "string",
-    "sipPassword": "string"
+    "id": "tel_123",
+    "type": "sip",
+    "owner_type": "organization",
+    "friendly_name": "Primary SIP",
+    "status": "active",
+    "created_at": "2024-01-01T00:00:00Z",
+    "termination_uri": "sip:support@example.com",
+    "sip_username": "support-user",
+    "sip_password": "strong-password"
   }
 }
 ```
-</ResponseExample>
 
-<ResponseExample name="400 Bad Request">
-```json
+```json 400 - Validation error
 {
   "success": false,
-  "message": "Validation failed for the request payload."
+  "message": "Missing or invalid telephony configuration fields."
 }
 ```
-</ResponseExample>
 
-<ResponseExample name="404 Not Found">
-```json
-{
-  "success": false,
-  "message": "The requested resource could not be found."
-}
-```
-</ResponseExample>
-
-<ResponseExample name="500 Internal Error">
-```json
+```json 500 - Server error
 {
   "success": false,
   "message": "An unexpected internal server error occurred."
 }
 ```
+
 </ResponseExample>
 
-</ResponseGroup>

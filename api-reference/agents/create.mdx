@@ -1,125 +1,137 @@
 ---
-title: 'Create Agent'
-api: 'POST /api/v1/agents'
+title: "Create Agent"
+openapi: "POST /api/v1/agents"
+description: "Create a new agent for your organization."
 ---
 
-Endpoint to create agent.
+### Overview
 
-### Headers
+Use this endpoint to **create a new agent** with configuration for model, voice, call behavior, tools, and integrations.
 
-<ParamField header="Authorization" type="string" required>
-  Bearer \&lt;token\&gt;
-</ParamField>
-<ParamField header="Content-Type" type="string" required>
-  application/json
-</ParamField>
-<ParamField header="Accept" type="string" required>
-  application/json
-</ParamField>
+The base URL for all requests from the playground is `https://api.ravan.ai/api/v1`.
 
-### Body
+### Authorization
 
-```json
-{
-  "organizationId": "string",
-  "widgetSettingsId": "string(int64)",
-  "name": "string",
-  "agentName": "string",
-  "model": "string",
-  "s2sModel": "string",
-  "voiceId": "string",
-  "temperature": 0.7,
-  "reminderTriggerMs": 0,
-  "reminderMaxCount": 0,
-  "ambientSound": "string",
-  "ambientSoundVolume": 0.5,
-  "endCallAfterSilence": true,
-  "maxCallDurationMs": 0,
-  "ringDurationMs": 0,
-  "enableVoicemailDetection": true,
-  "voicemailMessage": "string",
-  "voicemailDetectionTimeoutMs": 0,
-  "ivrOptions": { "custom": "object" },
-  "postCallAnalysisModel": "string",
-  "analysisSummaryPrompt": "string",
-  "selectedTools": { "custom": "object" },
-  "integrations": { "custom": "object" },
-  "knowledgeBase": "string",
-  "beginMessage": "string",
-  "startSpeaker": "string"
-}
+- **Authorization**: `Bearer YOUR_API_KEY` (header, required)  
+  Example: `Authorization: Bearer sk_live_xxx`
+
+### HTTP request
+
+- **Method**: `POST`  
+- **Path**: `/agents`
+
+### Request body
+
+Send a JSON object with the following fields. Unless otherwise noted, all fields are optional and can be updated later.
+
+| Field                         | Type    | Required | Description                                                              |
+| ----------------------------- | ------- | -------- | ------------------------------------------------------------------------ |
+| `organization_id`            | string  | Yes      | Organization identifier that owns the agent.                             |
+| `widget_settings_id`         | int64   | No       | ID of associated widget settings.                                        |
+| `name`                       | string  | No       | Internal name of the agent.                                             |
+| `agent_name`                 | string  | No       | Display name shown to end users.                                        |
+| `model`                      | string  | No       | Identifier of the model used for the agent.                             |
+| `s2s_model`                  | string  | No       | Identifier of the speech-to-speech model, if used.                      |
+| `voice_id`                   | string  | No       | Voice identifier for audio responses.                                   |
+| `temperature`                | number  | No       | Sampling temperature for the model.                                     |
+| `reminder_trigger_ms`        | int32   | No       | Milliseconds of silence before sending a reminder.                      |
+| `reminder_max_count`         | int32   | No       | Maximum number of reminders to send.                                    |
+| `ambient_sound`              | string  | No       | Ambient sound preset.                                                   |
+| `ambient_sound_volume`       | number  | No       | Volume of ambient sound (0–1).                                          |
+| `end_call_after_silence`     | boolean | No       | Whether to end the call after a period of silence.                      |
+| `max_call_duration_ms`       | int32   | No       | Maximum call duration in milliseconds.                                  |
+| `ring_duration_ms`           | int32   | No       | Maximum ring duration in milliseconds.                                  |
+| `enable_voicemail_detection` | boolean | No       | Whether to enable voicemail detection.                                  |
+| `voicemail_message`          | string  | No       | Message played when voicemail is detected.                              |
+| `voicemail_detection_timeout_ms` | int32 | No    | Timeout in milliseconds for voicemail detection.                        |
+| `ivr_options`                | object  | No       | IVR configuration as a JSON object.                                     |
+| `post_call_analysis_model`   | string  | No       | Model used for post-call analysis.                                      |
+| `analysis_summary_prompt`    | string  | No       | Custom prompt for call summaries.                                       |
+| `selected_tools`             | object  | No       | Tools configuration as a JSON object.                                   |
+| `integrations`               | object  | No       | Integrations configuration as a JSON object.                            |
+| `knowledge_base`             | string  | No       | Identifier of the knowledge base used by the agent.                     |
+| `begin_message`              | string  | No       | Initial message spoken by the agent.                                    |
+| `start_speaker`              | string  | No       | Who speaks first, for example `"agent"` or `"user"`.                    |
+
+<RequestExample>
+
+```bash 201 - Create agent
+curl --request POST \
+  --url https://api.ravan.ai/api/v1/agents \
+  --header 'Authorization: Bearer YOUR_API_KEY' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "organization_id": "org_123",
+    "name": "support-agent",
+    "agent_name": "Support Agent",
+    "model": "gpt-4.1",
+    "voice_id": "voice_123",
+    "temperature": 0.7,
+    "begin_message": "Hi, how can I help you today?",
+    "start_speaker": "agent"
+  }'
 ```
 
-### Responses
+</RequestExample>
 
-<ResponseGroup>
+### Successful response (201)
 
-<ResponseExample name="200 OK">
-```json
+On success, the API returns the newly created agent.
+
+<ResponseExample>
+
+```json 201 - Created
 {
   "success": true,
-  "message": "string",
+  "message": "Agent created successfully.",
   "data": {
-    "id": "string(int64)",
-    "organizationId": "string",
-    "widgetSettingsId": "string(int64)",
-    "name": "string",
-    "agentName": "string",
+    "id": 123,
+    "organization_id": "org_123",
+    "widget_settings_id": 10,
+    "name": "support-agent",
+    "agent_name": "Support Agent",
     "status": "AGENT_STATUS_ACTIVE",
-    "model": "string",
-    "s2sModel": "string",
-    "voiceId": "string",
+    "model": "gpt-4.1",
+    "s2s_model": "realtime-model",
+    "voice_id": "voice_123",
     "temperature": 0.7,
-    "reminderTriggerMs": 0,
-    "reminderMaxCount": 0,
-    "ambientSound": "string",
-    "ambientSoundVolume": 0.5,
-    "endCallAfterSilence": true,
-    "maxCallDurationMs": 0,
-    "ringDurationMs": 0,
-    "enableVoicemailDetection": true,
-    "voicemailMessage": "string",
-    "voicemailDetectionTimeoutMs": 0,
-    "ivrOptions": { "custom": "object" },
-    "postCallAnalysisModel": "string",
-    "analysisSummaryPrompt": "string",
-    "selectedTools": { "custom": "object" },
-    "integrations": { "custom": "object" },
-    "knowledgeBase": "string",
-    "beginMessage": "string",
-    "startSpeaker": "string",
-    "createdAt": "string",
-    "updatedAt": "string"
+    "reminder_trigger_ms": 30000,
+    "reminder_max_count": 2,
+    "ambient_sound": "office",
+    "ambient_sound_volume": 0.4,
+    "end_call_after_silence": true,
+    "max_call_duration_ms": 600000,
+    "ring_duration_ms": 15000,
+    "enable_voicemail_detection": true,
+    "voicemail_message": "Sorry we missed you.",
+    "voicemail_detection_timeout_ms": 45000,
+    "ivr_options": {},
+    "post_call_analysis_model": "gpt-4.1",
+    "analysis_summary_prompt": "Summarize the call.",
+    "selected_tools": {},
+    "integrations": {},
+    "knowledge_base": "kb_123",
+    "begin_message": "Hi, how can I help you today?",
+    "start_speaker": "agent",
+    "created_at": "2024-01-01T00:00:00Z",
+    "updated_at": "2024-01-01T00:00:00Z"
   }
 }
 ```
-</ResponseExample>
 
-<ResponseExample name="400 Bad Request">
-```json
+```json 400 - Validation error
 {
   "success": false,
-  "message": "Validation failed for the request payload."
+  "message": "organization_id is required."
 }
 ```
-</ResponseExample>
 
-<ResponseExample name="404 Not Found">
-```json
-{
-  "success": false,
-  "message": "The requested resource could not be found."
-}
-```
-</ResponseExample>
-
-<ResponseExample name="500 Internal Error">
-```json
+```json 500 - Server error
 {
   "success": false,
   "message": "An unexpected internal server error occurred."
 }
 ```
+
 </ResponseExample>
 
-</ResponseGroup>

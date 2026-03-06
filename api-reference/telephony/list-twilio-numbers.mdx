@@ -1,74 +1,79 @@
 ---
-title: 'List Twilio Owned Numbers'
-api: 'GET /api/v1/twilio-owned-numbers'
+title: "List Provider-Owned Numbers"
+openapi: "GET /api/v1/twilio-owned-numbers"
+description: "List phone numbers owned by the connected telephony provider."
 ---
 
-Endpoint to list twilio owned numbers.
+### Overview
 
-### Headers
+Use this endpoint to **list phone numbers owned by your connected telephony provider** that are available to use with your account.
 
-<ParamField header="Authorization" type="string" required>
-  Bearer \&lt;token\&gt;
-</ParamField>
-<ParamField header="Content-Type" type="string" required>
-  application/json
-</ParamField>
-<ParamField header="Accept" type="string" required>
-  application/json
-</ParamField>
+The base URL for all requests from the playground is `https://api.ravan.ai/api/v1`.
 
+### Authorization
 
+- **Authorization**: `Bearer YOUR_API_KEY` (header, required)  
+  Example: `Authorization: Bearer sk_live_xxx`
 
-### Responses
+### HTTP request
 
-<ResponseGroup>
+- **Method**: `GET`  
+- **Path**: `/twilio-owned-numbers`
 
-<ResponseExample name="200 OK">
-```json
+### Successful response (200)
+
+On success, the API returns a list of numbers owned by the telephony provider.
+
+#### Top-level fields
+
+| Field     | Type                           | Description                                   |
+| --------- | ------------------------------ | --------------------------------------------- |
+| `success` | boolean                        | Indicates whether the request was successful. |
+| `message` | string                         | Human-readable message about the operation.   |
+| `data`    | array\<ProviderOwnedNumber>    | List of provider-owned numbers.               |
+
+#### `ProviderOwnedNumber` object
+
+This object corresponds to the `TwilioOwnedNumber` message in the service definition.
+
+| Field           | Type    | Description                                             | Example                  |
+| -------------- | ------- | ------------------------------------------------------- | ------------------------ |
+| `sid`          | string  | Provider-side identifier for the phone number.         | `"PNXXXXXXXXXXXXXXXX"`   |
+| `phone_number` | string  | Phone number in E.164 format.                           | `"+14157774444"`         |
+| `friendly_name`| string  | Human-readable label for the number.                   | `"Support Line"`         |
+| `status`       | string  | Current status of the number with the provider.        | `"active"`               |
+| `date_created` | string  | Creation timestamp at the provider.                     | `"2024-01-01T00:00:00Z"` |
+| `voice`        | boolean | Whether the number supports voice.                      | `true`                   |
+| `sms`          | boolean | Whether the number supports SMS.                        | `true`                   |
+| `mms`          | boolean | Whether the number supports MMS.                        | `false`                  |
+
+<ResponseExample>
+
+```json 200 - Success
 {
   "success": true,
-  "message": "string",
+  "message": "Provider-owned numbers retrieved successfully.",
   "data": [
     {
-      "sid": "string",
-      "phoneNumber": "string",
-      "friendlyName": "string",
-      "status": "string",
-      "dateCreated": "string",
+      "sid": "PNXXXXXXXXXXXXXXXX",
+      "phone_number": "+14157774444",
+      "friendly_name": "Support Line",
+      "status": "active",
+      "date_created": "2024-01-01T00:00:00Z",
       "voice": true,
       "sms": true,
-      "mms": true
+      "mms": false
     }
   ]
 }
 ```
-</ResponseExample>
 
-<ResponseExample name="400 Bad Request">
-```json
-{
-  "success": false,
-  "message": "Validation failed for the request payload."
-}
-```
-</ResponseExample>
-
-<ResponseExample name="404 Not Found">
-```json
-{
-  "success": false,
-  "message": "The requested resource could not be found."
-}
-```
-</ResponseExample>
-
-<ResponseExample name="500 Internal Error">
-```json
+```json 500 - Server error
 {
   "success": false,
   "message": "An unexpected internal server error occurred."
 }
 ```
+
 </ResponseExample>
 
-</ResponseGroup>

@@ -1,77 +1,109 @@
 ---
-title: 'Buy Phone Number'
-api: 'POST /api/v1/phone-numbers/buy'
+title: "Buy Phone Number"
+openapi: "POST /api/v1/phone-numbers/buy"
+description: "Purchase a phone number from the available inventory."
 ---
 
-Endpoint to buy phone number.
+### Overview
 
-### Headers
+Use this endpoint to **purchase a phone number** that you have previously discovered via the List Available Numbers API.
 
-<ParamField header="Authorization" type="string" required>
-  Bearer \&lt;token\&gt;
-</ParamField>
-<ParamField header="Content-Type" type="string" required>
-  application/json
-</ParamField>
-<ParamField header="Accept" type="string" required>
-  application/json
-</ParamField>
+The base URL for all requests from the playground is `https://api.ravan.ai/api/v1`.
 
-### Body
+### Authorization
 
-```json
-{
-  "phoneNumber": "string",
-  "price": 0.0,
-  "perMinutePriceInbound": 0,
-  "perMinutePriceOutbound": 0
-}
+- **Authorization**: `Bearer YOUR_API_KEY` (header, required)  
+  Example: `Authorization: Bearer sk_live_xxx`
+
+### HTTP request
+
+- **Method**: `POST`  
+- **Path**: `/phone-numbers/buy`
+
+### Request body
+
+Send a JSON object with the following fields.
+
+| Field                        | Type    | Required | Description                                                                 | Example         |
+| --------------------------- | ------- | -------- | --------------------------------------------------------------------------- | --------------- |
+| `phone_number`              | string  | Yes      | Phone number to purchase in E.164 format.                                  | `"+14157774444"` |
+| `price`                     | number  | Yes      | One-time purchase price for the number.                                    | `1.0`           |
+| `per_minute_price_inbound`  | int32   | Yes      | Per-minute price (in minor units) for inbound calls to this number.        | `1`             |
+| `per_minute_price_outbound` | int32   | Yes      | Per-minute price (in minor units) for outbound calls from this number.     | `2`             |
+
+<RequestExample>
+
+```bash 201 - Buy phone number
+curl --request POST \
+  --url https://api.ravan.ai/api/v1/phone-numbers/buy \
+  --header 'Authorization: Bearer YOUR_API_KEY' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "phone_number": "+14157774444",
+    "price": 1.0,
+    "per_minute_price_inbound": 1,
+    "per_minute_price_outbound": 2
+  }'
 ```
 
-### Responses
+</RequestExample>
 
-<ResponseGroup>
+### Successful response (201)
 
-<ResponseExample name="200 OK">
-```json
+On success, the API returns the purchased phone number record.
+
+#### Top-level fields
+
+| Field     | Type                    | Description                                   |
+| --------- | ----------------------- | --------------------------------------------- |
+| `success` | boolean                 | Indicates whether the request was successful. |
+| `message` | string                  | Human-readable message about the operation.   |
+| `data`    | PurchasedPhoneNumber    | Purchased phone number details.               |
+
+#### `PurchasedPhoneNumber` object
+
+| Field           | Type    | Description                                        | Example            |
+| -------------- | ------- | -------------------------------------------------- | ------------------ |
+| `phone_number` | string  | Purchased phone number in E.164 format.           | `"+14157774444"`   |
+| `price`        | number  | One-time purchase price for the number.           | `1.0`              |
+| `status`       | string  | Status of the purchased number (for example, `"active"`). | `"active"` |
+| `purchased_at` | string  | ISO 8601 timestamp when the number was purchased. | `"2024-01-01T00:00:00Z"` |
+
+<ResponseExample>
+
+```json 201 - Created
 {
   "success": true,
-  "message": "string",
+  "message": "Phone number purchased successfully.",
   "data": {
-    "phoneNumber": "string",
-    "price": 0.0,
-    "status": "string",
-    "purchasedAt": "string"
+    "phone_number": "+14157774444",
+    "price": 1.0,
+    "status": "active",
+    "purchased_at": "2024-01-01T00:00:00Z"
   }
 }
 ```
-</ResponseExample>
 
-<ResponseExample name="400 Bad Request">
-```json
+```json 400 - Validation error
 {
   "success": false,
-  "message": "Validation failed for the request payload."
+  "message": "phone_number must be a valid E.164 number."
 }
 ```
-</ResponseExample>
 
-<ResponseExample name="404 Not Found">
-```json
+```json 409 - Already purchased
 {
   "success": false,
-  "message": "The requested resource could not be found."
+  "message": "The requested phone number is no longer available."
 }
 ```
-</ResponseExample>
 
-<ResponseExample name="500 Internal Error">
-```json
+```json 500 - Server error
 {
   "success": false,
   "message": "An unexpected internal server error occurred."
 }
 ```
+
 </ResponseExample>
 
-</ResponseGroup>
