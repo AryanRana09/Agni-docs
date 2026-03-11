@@ -1,116 +1,132 @@
 ---
 title: "Import Phone Number"
 openapi: "POST /api/v1/phone-numbers/import"
-description: "Import an existing phone number from an external telephony provider."
+description: "Import an existing phone number or SIP trunk."
 ---
 
-### Overview
+### Authorizations
 
-Use this endpoint to **import a phone number** you manage with another telephony provider so it can be used within your account.
+#### Authorization
 
-The base URL for all requests from the playground is `https://api.ravan.ai/api/v1`.
+`string` header `required`
 
-### Authorization
+Use `Bearer YOUR_API_KEY`.
 
-- **Authorization**: `Bearer YOUR_API_KEY` (header, required)  
-  Example: `Authorization: Bearer sk_live_xxx`
+### Body
 
-### HTTP request
+`application/json`
 
-- **Method**: `POST`  
-- **Path**: `/phone-numbers/import`
+#### phone
 
-### Request body
+`string` required
 
-Send a JSON object with the following fields.
+Phone number in E.164 format.
 
-| Field             | Type   | Required | Description                                                        | Example                       |
-| ----------------- | ------ | -------- | ------------------------------------------------------------------ | ----------------------------- |
-| `phone`           | string | Yes      | Phone number to import, in E.164 format or provider-specific form. | `"+14157774444"`              |
-| `type`            | string | Yes      | Type of phone number or trunk (for example, `"sip"` or `"pstn"`).  | `"sip"`                       |
-| `name`            | string | Yes      | Human-readable name for the imported number.                       | `"Support Line"`              |
-| `termination_uri` | string | Yes      | SIP termination URI to route outbound calls through.               | `"sip:support@example.com"`   |
-| `sip_username`    | string | Yes      | SIP username used to authenticate with the provider.               | `"support-user"`              |
-| `sip_password`    | string | Yes      | SIP password used to authenticate with the provider.               | `"strong-password"`           |
+#### type
+
+`string` required
+
+Phone number source type.
+
+#### name
+
+`string` required
+
+Display name for this imported number.
+
+#### termination_uri
+
+`string`
+
+SIP termination URI.
+
+#### sip_username
+
+`string`
+
+SIP username.
+
+#### sip_password
+
+`string`
+
+SIP password.
 
 <RequestExample>
 
-```bash 201 - Import phone number
-curl --request POST \
-  --url https://api.ravan.ai/api/v1/phone-numbers/import \
-  --header 'Authorization: Bearer YOUR_API_KEY' \
-  --header 'Content-Type: application/json' \
-  --data '{
-    "phone": "+14157774444",
-    "type": "sip",
-    "name": "Support Line",
-    "termination_uri": "sip:support@example.com",
-    "sip_username": "support-user",
-    "sip_password": "strong-password"
-  }'
+```json
+{
+  "phone": "+1234567890",
+  "type": "custom",
+  "name": "External SIP Office",
+  "termination_uri": "sip:gw.example.com",
+  "sip_username": "myuser",
+  "sip_password": "mypassword"
+}
 ```
 
 </RequestExample>
 
-### Successful response (201)
+### Response
 
-On success, the API returns details of the imported number.
+#### 201 application/json
 
-#### Top-level fields
+#### success
 
-| Field     | Type                 | Description                                   |
-| --------- | -------------------- | --------------------------------------------- |
-| `success` | boolean              | Indicates whether the request was successful. |
-| `message` | string               | Human-readable message about the operation.   |
-| `data`    | ImportedPhoneNumber  | Imported phone number details.                |
+`boolean` required
 
-#### `ImportedPhoneNumber` object
+#### message
 
-| Field             | Type   | Description                                        | Example                       |
-| ----------------- | ------ | -------------------------------------------------- | ----------------------------- |
-| `id`              | string | Unique identifier for the imported number.        | `"imp_123"`                   |
-| `phone`           | string | Imported phone number.                            | `"+14157774444"`              |
-| `type`            | string | Type of the imported number or trunk.            | `"sip"`                       |
-| `name`            | string | Human-readable name for the imported number.     | `"Support Line"`              |
-| `termination_uri` | string | SIP termination URI associated with the number.  | `"sip:support@example.com"`   |
-| `sip_username`    | string | SIP username used to authenticate.               | `"support-user"`              |
-| `sip_password`    | string | SIP password used to authenticate.               | `"strong-password"`           |
-| `status`          | string | Current status of the imported number.           | `"active"`                    |
-| `created_at`      | string | ISO 8601 timestamp when the number was imported. | `"2024-01-01T00:00:00Z"`      |
+`string` required
+
+#### data
+
+`object` required
+
+#### data.id
+
+`string` required
+
+#### data.phone
+
+`string` required
+
+#### data.type
+
+`string` required
+
+#### data.name
+
+`string` required
+
+#### data.status
+
+`string` required
+
+#### data.created_at
+
+`string` required
+
+ISO 8601 timestamp.
 
 <ResponseExample>
 
-```json 201 - Created
+```json 201
 {
   "success": true,
-  "message": "Phone number imported successfully.",
+  "message": "Phone number imported successfully",
   "data": {
-    "id": "imp_123",
-    "phone": "+14157774444",
-    "type": "sip",
-    "name": "Support Line",
-    "termination_uri": "sip:support@example.com",
-    "sip_username": "support-user",
-    "sip_password": "strong-password",
+    "id": "uuid-string",
+    "phone": "+1234567890",
+    "type": "custom",
+    "name": "External SIP Office",
+    "termination_uri": "sip:gw.example.com",
+    "sip_username": "myuser",
+    "sip_password": "mypassword",
     "status": "active",
-    "created_at": "2024-01-01T00:00:00Z"
+    "created_at": "2024-03-03T16:16:26Z"
   }
 }
 ```
 
-```json 400 - Validation error
-{
-  "success": false,
-  "message": "Invalid SIP credentials or termination_uri."
-}
-```
-
-```json 500 - Server error
-{
-  "success": false,
-  "message": "An unexpected internal server error occurred."
-}
-```
-
 </ResponseExample>
-

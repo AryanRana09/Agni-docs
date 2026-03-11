@@ -35,13 +35,13 @@
         "tab": "API Reference",
         "groups": [
           {
-            "group": "API Documentation",
+            "group": "Introduction",
             "pages": [
               "api-reference/introduction"
             ]
           },
           {
-            "group": "Agent",
+            "group": "Agent API",
             "pages": [
               "api-reference/agents/get",
               "api-reference/agents/list",
@@ -52,7 +52,7 @@
             ]
           },
           {
-            "group": "Agent Tool",
+            "group": "Agent Tool API",
             "pages": [
               "api-reference/tools/get",
               "api-reference/tools/list",
@@ -62,7 +62,7 @@
             ]
           },
           {
-            "group": "Widget Settings",
+            "group": "Widget Settings API",
             "pages": [
               "api-reference/widget-settings/get",
               "api-reference/widget-settings/list",
@@ -72,7 +72,7 @@
             ]
           },
           {
-            "group": "Telephony",
+            "group": "Phone Number & Telephony API",
             "pages": [
               "api-reference/telephony/list-available-numbers",
               "api-reference/telephony/buy-number",
@@ -102,8 +102,8 @@
     }
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/logo/light.png",
+    "dark": "/logo/dark.png"
   },
   "navbar": {
     "links": [

@@ -1,6 +1,85 @@
 ---
 title: "Update Agent Status"
 openapi: "PATCH /api/v1/agents/{id}/status"
+description: "Update only the status of an agent."
 ---
 
+### Authorizations
 
+#### Authorization
+
+`string` header `required`
+
+Bearer token in format `Bearer YOUR_API_KEY`.
+
+### Path parameters
+
+#### id
+
+`integer` required
+
+Agent id.
+
+### Body
+
+`application/json`
+
+#### organization_id
+
+`string` required
+
+#### status
+
+`string` required
+
+Example: `AGENT_STATUS_INACTIVE`
+
+<RequestExample>
+
+```json
+{
+  "organization_id": "org_123",
+  "status": "AGENT_STATUS_INACTIVE"
+}
+```
+
+</RequestExample>
+
+### Response
+
+#### 200 application/json
+
+#### success
+
+`boolean` required
+
+#### message
+
+`string` required
+
+#### data
+
+`object` required
+
+#### data.id
+
+`integer` required
+
+#### data.status
+
+`string` required
+
+<ResponseExample>
+
+```json 200
+{
+  "success": true,
+  "message": "Status updated",
+  "data": {
+    "id": 1,
+    "status": "AGENT_STATUS_INACTIVE"
+  }
+}
+```
+
+</ResponseExample>

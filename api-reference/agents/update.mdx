@@ -1,6 +1,85 @@
 ---
 title: "Update Agent"
 openapi: "PATCH /api/v1/agents/{id}"
+description: "Update an existing agent."
 ---
 
+### Authorizations
 
+#### Authorization
+
+`string` header `required`
+
+Bearer token in format `Bearer YOUR_API_KEY`.
+
+### Path parameters
+
+#### id
+
+`integer` required
+
+Agent id.
+
+### Body
+
+`application/json`
+
+#### organization_id
+
+`string` required
+
+#### name
+
+`string`
+
+#### temperature
+
+`number`
+
+<RequestExample>
+
+```json
+{
+  "organization_id": "org_123",
+  "name": "Updated Agent",
+  "temperature": 0.6
+}
+```
+
+</RequestExample>
+
+### Response
+
+#### 200 application/json
+
+#### success
+
+`boolean` required
+
+#### message
+
+`string` required
+
+Example: `"Agent updated"`
+
+#### data
+
+`object` required
+
+#### data.id
+
+`integer` required
+
+<ResponseExample>
+
+```json 200
+{
+  "success": true,
+  "message": "Agent updated",
+  "data": {
+    "id": 1
+  }
+}
+```
+
+</ResponseExample>

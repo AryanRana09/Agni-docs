@@ -1,72 +1,84 @@
 ---
 title: "List Agents"
 openapi: "GET /api/v1/agents"
-description: "List all agents for an organization."
+description: "List agents for an organization with pagination."
 ---
 
-### Overview
+### Authorizations
 
-Use this endpoint to **list agents** belonging to a specific organization with basic pagination.
+#### Authorization
 
-The base URL for all requests from the playground is `https://api.ravan.ai/api/v1`.
+`string` header `required`
 
-### Authorization
-
-- **Authorization**: `Bearer YOUR_API_KEY` (header, required)  
-  Example: `Authorization: Bearer sk_live_xxx`
-
-### HTTP request
-
-- **Method**: `GET`  
-- **Path**: `/agents`
+Bearer token in format `Bearer YOUR_API_KEY`.
 
 ### Query parameters
 
-| Name             | Type   | Required | Description                                      | Example    |
-| ---------------- | ------ | -------- | ------------------------------------------------ | ---------- |
-| `organizationId` | string | Yes      | Organization identifier to list agents for.      | `"org_123"` |
-| `limit`          | int32  | No       | Maximum number of agents to return.              | `10`       |
-| `offset`         | int32  | No       | Number of agents to skip for pagination.         | `0`        |
+#### organization_id
 
-### Successful response (200)
+`string` required
 
-On success, the API returns a list of agents with pagination metadata.
+Organization id.
 
-#### Top-level fields
+#### limit
 
-| Field     | Type          | Description                                   |
-| --------- | ------------- | --------------------------------------------- |
-| `success` | boolean       | Indicates whether the request was successful. |
-| `message` | string        | Human-readable message about the operation.   |
-| `data`    | array\<Agent> | List of agents.                               |
-| `meta`    | Meta          | Pagination metadata.                          |
+`integer`
 
-#### `Meta` object
+Page size.
 
-| Field    | Type  | Description                             | Example |
-| -------- | ----- | --------------------------------------- | ------- |
-| `total`  | int64 | Total number of matching agents.        | `42`    |
-| `limit`  | int32 | Maximum number of agents per page.      | `10`    |
-| `offset` | int32 | Offset for the current page.            | `0`     |
+Example: `10`
+
+#### offset
+
+`integer`
+
+Page offset.
+
+Example: `0`
+
+### Response
+
+#### 200 application/json
+
+#### success
+
+`boolean` required
+
+#### message
+
+`string` required
+
+Example: `"Agents fetched"`
+
+#### data
+
+`object[]` required
+
+List of agent records.
+
+#### meta
+
+`object` required
+
+#### meta.total
+
+`integer` required
+
+#### meta.limit
+
+`integer` required
+
+#### meta.offset
+
+`integer` required
 
 <ResponseExample>
 
-```json 200 - Success
+```json 200
 {
   "success": true,
-  "message": "Agents retrieved successfully.",
-  "data": [
-    {
-      "id": 123,
-      "organization_id": "org_123",
-      "name": "support-agent",
-      "agent_name": "Support Agent",
-      "status": "AGENT_STATUS_ACTIVE",
-      "model": "gpt-4.1",
-      "created_at": "2024-01-01T00:00:00Z",
-      "updated_at": "2024-01-02T00:00:00Z"
-    }
-  ],
+  "message": "Agents fetched",
+  "data": [],
   "meta": {
     "total": 1,
     "limit": 10,
@@ -75,19 +87,4 @@ On success, the API returns a list of agents with pagination metadata.
 }
 ```
 
-```json 400 - Validation error
-{
-  "success": false,
-  "message": "organizationId is required."
-}
-```
-
-```json 500 - Server error
-{
-  "success": false,
-  "message": "An unexpected internal server error occurred."
-}
-```
-
 </ResponseExample>
-

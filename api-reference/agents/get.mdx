@@ -1,118 +1,218 @@
 ---
 title: "Get Agent"
 openapi: "GET /api/v1/agents/{id}"
-description: "Retrieve a single agent by ID."
+description: "Fetch a single agent by id."
 ---
 
-### Overview
+### Authorizations
 
-Use this endpoint to **retrieve a single agent** by its ID for a specific organization.
+#### Authorization
 
-The base URL for all requests from the playground is `https://api.ravan.ai/api/v1`.
+`string` header `required`
 
-### Authorization
-
-- **Authorization**: `Bearer YOUR_API_KEY` (header, required)  
-  Example: `Authorization: Bearer sk_live_xxx`
-
-### HTTP request
-
-- **Method**: `GET`  
-- **Path**: `/agents/{id}`
+Bearer token in format `Bearer YOUR_API_KEY`.
 
 ### Path parameters
 
-| Name | Type  | Required | Description                | Example |
-| ---- | ----- | -------- | -------------------------- | ------- |
-| `id` | int64 | Yes      | Unique identifier of agent | `123`   |
+#### id
+
+`integer` required
+
+Agent id.
 
 ### Query parameters
 
-| Name              | Type   | Required | Description                                      | Example          |
-| ----------------- | ------ | -------- | ------------------------------------------------ | ---------------- |
-| `organizationId`  | string | Yes      | Organization identifier that owns the agent.     | `"org_123"`      |
+#### organization_id
 
-### Successful response (200)
+`string` required
 
-On success, the API returns the requested agent.
+Organization id that owns the agent.
 
-#### Top-level fields
+Example: `org_123`
 
-| Field     | Type   | Description                                   |
-| --------- | ------ | --------------------------------------------- |
-| `success` | boolean | Indicates whether the request was successful. |
-| `message` | string  | Human-readable message about the operation.   |
-| `data`    | Agent   | Agent details.                                |
+### Response
 
-#### `Agent` object
+#### 200 application/json
 
-The Agent object corresponds to the `Agent` message in the service definition.
+#### success
 
-Key fields:
+`boolean` required
 
-- **id** (int64): Unique identifier of the agent.  
-- **organization_id** (string): Identifier of the owning organization.  
-- **widget_settings_id** (int64, optional): Associated widget settings configuration.  
-- **name** (string, optional): Internal name of the agent.  
-- **agent_name** (string, optional): Display name of the agent.  
-- **status** (enum): Current status of the agent: `AGENT_STATUS_ACTIVE` or `AGENT_STATUS_INACTIVE`.  
-- **model**, **s2s_model**, **voice_id** (string, optional): Model and voice configuration.  
-- Additional configuration fields controlling temperature, reminders, ambient sound, call behavior, IVR options, tool selection, integrations, knowledge base, prompts, and timestamps.
+#### message
+
+`string` required
+
+Example: `"Agent fetched successfully"`
+
+#### data
+
+`object` required
+
+#### data.id
+
+`integer` required
+
+#### data.organization_id
+
+`string` required
+
+#### data.widget_settings_id
+
+`integer | null`
+
+#### data.name
+
+`string` required
+
+#### data.agent_name
+
+`string` required
+
+#### data.status
+
+`string` required
+
+Example: `AGENT_STATUS_ACTIVE`
+
+#### data.model
+
+`string` required
+
+#### data.s2s_model
+
+`string | null`
+
+#### data.voice_id
+
+`string | null`
+
+#### data.temperature
+
+`number | null`
+
+#### data.reminder_trigger_ms
+
+`integer | null`
+
+#### data.reminder_max_count
+
+`integer | null`
+
+#### data.ambient_sound
+
+`string | null`
+
+#### data.ambient_sound_volume
+
+`number | null`
+
+#### data.end_call_after_silence
+
+`boolean | null`
+
+#### data.max_call_duration_ms
+
+`integer | null`
+
+#### data.ring_duration_ms
+
+`integer | null`
+
+#### data.enable_voicemail_detection
+
+`boolean | null`
+
+#### data.voicemail_message
+
+`string | null`
+
+#### data.voicemail_detection_timeout_ms
+
+`integer | null`
+
+#### data.ivr_options
+
+`object`
+
+#### data.post_call_analysis_model
+
+`string | null`
+
+#### data.analysis_summary_prompt
+
+`string | null`
+
+#### data.selected_tools
+
+`object`
+
+#### data.integrations
+
+`object`
+
+#### data.knowledge_base
+
+`string | null`
+
+#### data.begin_message
+
+`string | null`
+
+#### data.start_speaker
+
+`string | null`
+
+#### data.created_at
+
+`string` required
+
+ISO 8601 timestamp.
+
+#### data.updated_at
+
+`string` required
+
+ISO 8601 timestamp.
 
 <ResponseExample>
 
-```json 200 - Success
+```json 200
 {
   "success": true,
-  "message": "Agent retrieved successfully.",
+  "message": "Agent fetched successfully",
   "data": {
-    "id": 123,
+    "id": 1,
     "organization_id": "org_123",
     "widget_settings_id": 10,
-    "name": "support-agent",
-    "agent_name": "Support Agent",
+    "name": "Support Agent",
+    "agent_name": "Maya",
     "status": "AGENT_STATUS_ACTIVE",
-    "model": "gpt-4.1",
-    "s2s_model": "realtime-model",
-    "voice_id": "voice_123",
+    "model": "gpt-4",
+    "s2s_model": "realtime",
+    "voice_id": "voice_01",
     "temperature": 0.7,
     "reminder_trigger_ms": 30000,
-    "reminder_max_count": 2,
+    "reminder_max_count": 3,
     "ambient_sound": "office",
-    "ambient_sound_volume": 0.4,
+    "ambient_sound_volume": 0.5,
     "end_call_after_silence": true,
     "max_call_duration_ms": 600000,
-    "ring_duration_ms": 15000,
+    "ring_duration_ms": 30000,
     "enable_voicemail_detection": true,
-    "voicemail_message": "Sorry we missed you.",
-    "voicemail_detection_timeout_ms": 45000,
+    "voicemail_message": "Please leave a message",
+    "voicemail_detection_timeout_ms": 5000,
     "ivr_options": {},
-    "post_call_analysis_model": "gpt-4.1",
-    "analysis_summary_prompt": "Summarize the call.",
+    "post_call_analysis_model": "gpt-4",
+    "analysis_summary_prompt": "Summarize the call",
     "selected_tools": {},
     "integrations": {},
-    "knowledge_base": "kb_123",
-    "begin_message": "Hi, how can I help you today?",
+    "knowledge_base": "kb_1",
+    "begin_message": "Hello how can I help?",
     "start_speaker": "agent",
-    "created_at": "2024-01-01T00:00:00Z",
-    "updated_at": "2024-01-02T00:00:00Z"
+    "created_at": "2026-03-10T10:00:00Z",
+    "updated_at": "2026-03-10T10:00:00Z"
   }
 }
 ```
 
-```json 404 - Not found
-{
-  "success": false,
-  "message": "Agent not found."
-}
-```
-
-```json 500 - Server error
-{
-  "success": false,
-  "message": "An unexpected internal server error occurred."
-}
-```
-
 </ResponseExample>
-

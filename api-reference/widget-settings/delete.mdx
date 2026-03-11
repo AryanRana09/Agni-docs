@@ -1,6 +1,44 @@
 ---
 title: "Deactivate Widget Settings"
 openapi: "DELETE /api/v1/widget-settings/{id}"
+description: "Deactivate one widget settings record."
 ---
 
+### Authorizations
 
+#### Authorization
+
+`string` header `required`
+
+Use `Bearer YOUR_API_KEY`.
+
+### Path parameters
+
+#### id
+
+`integer` required
+
+Widget settings id.
+
+### Response
+
+#### 200 application/json
+
+#### success
+
+`boolean` required
+
+#### message
+
+`string` required
+
+<ResponseExample>
+
+```json 200
+{
+  "success": true,
+  "message": "Widget settings deactivated"
+}
+```
+
+</ResponseExample>

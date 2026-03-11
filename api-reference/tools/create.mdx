@@ -1,6 +1,95 @@
 ---
-title: "Create Agent Tool"
+title: "Create Tool"
 openapi: "POST /api/v1/tools"
+description: "Create a reusable tool for your agents."
 ---
 
+### Authorizations
 
+#### Authorization
+
+`string` header `required`
+
+Use `Bearer YOUR_API_KEY`.
+
+### Body
+
+`application/json`
+
+#### organization_id
+
+`string` required
+
+Organization id.
+
+#### name
+
+`string` required
+
+Tool name.
+
+#### type
+
+`string` required
+
+Tool type.
+
+#### definition
+
+`object` required
+
+Tool definition payload.
+
+#### description
+
+`string`
+
+Short description of the tool.
+
+<RequestExample>
+
+```json
+{
+  "organization_id": "org_123",
+  "name": "Create Todo",
+  "description": "Creates tasks",
+  "type": "api",
+  "definition": {}
+}
+```
+
+</RequestExample>
+
+### Response
+
+#### 201 application/json
+
+#### success
+
+`boolean` required
+
+#### message
+
+`string` required
+
+#### data
+
+`object` required
+
+#### data.id
+
+`integer` required
+
+<ResponseExample>
+
+```json 201
+{
+  "success": true,
+  "message": "Tool created",
+  "data": {
+    "id": 1
+  }
+}
+```
+
+</ResponseExample>

@@ -1,65 +1,80 @@
 ---
-title: "List Provider-Owned Numbers"
+title: "List Twilio Owned Numbers"
 openapi: "GET /api/v1/twilio-owned-numbers"
-description: "List phone numbers owned by the connected telephony provider."
+description: "List all phone numbers in your connected Twilio account."
 ---
 
-### Overview
+### Authorizations
 
-Use this endpoint to **list phone numbers owned by your connected telephony provider** that are available to use with your account.
+#### Authorization
 
-The base URL for all requests from the playground is `https://api.ravan.ai/api/v1`.
+`string` header `required`
 
-### Authorization
+Use `Bearer YOUR_API_KEY`.
 
-- **Authorization**: `Bearer YOUR_API_KEY` (header, required)  
-  Example: `Authorization: Bearer sk_live_xxx`
+### Response
 
-### HTTP request
+#### 200 application/json
 
-- **Method**: `GET`  
-- **Path**: `/twilio-owned-numbers`
+#### success
 
-### Successful response (200)
+`boolean` required
 
-On success, the API returns a list of numbers owned by the telephony provider.
+#### message
 
-#### Top-level fields
+`string` required
 
-| Field     | Type                           | Description                                   |
-| --------- | ------------------------------ | --------------------------------------------- |
-| `success` | boolean                        | Indicates whether the request was successful. |
-| `message` | string                         | Human-readable message about the operation.   |
-| `data`    | array\<ProviderOwnedNumber>    | List of provider-owned numbers.               |
+#### data
 
-#### `ProviderOwnedNumber` object
+`object[]` required
 
-This object corresponds to the `TwilioOwnedNumber` message in the service definition.
+#### data[].sid
 
-| Field           | Type    | Description                                             | Example                  |
-| -------------- | ------- | ------------------------------------------------------- | ------------------------ |
-| `sid`          | string  | Provider-side identifier for the phone number.         | `"PNXXXXXXXXXXXXXXXX"`   |
-| `phone_number` | string  | Phone number in E.164 format.                           | `"+14157774444"`         |
-| `friendly_name`| string  | Human-readable label for the number.                   | `"Support Line"`         |
-| `status`       | string  | Current status of the number with the provider.        | `"active"`               |
-| `date_created` | string  | Creation timestamp at the provider.                     | `"2024-01-01T00:00:00Z"` |
-| `voice`        | boolean | Whether the number supports voice.                      | `true`                   |
-| `sms`          | boolean | Whether the number supports SMS.                        | `true`                   |
-| `mms`          | boolean | Whether the number supports MMS.                        | `false`                  |
+`string` required
+
+#### data[].phone_number
+
+`string` required
+
+#### data[].friendly_name
+
+`string`
+
+#### data[].status
+
+`string`
+
+#### data[].date_created
+
+`string`
+
+ISO 8601 timestamp.
+
+#### data[].voice
+
+`boolean`
+
+#### data[].sms
+
+`boolean`
+
+#### data[].mms
+
+`boolean`
 
 <ResponseExample>
 
-```json 200 - Success
+```json 200
 {
   "success": true,
-  "message": "Provider-owned numbers retrieved successfully.",
+  "message": "Twilio owned numbers retrieved successfully",
   "data": [
     {
-      "sid": "PNXXXXXXXXXXXXXXXX",
-      "phone_number": "+14157774444",
-      "friendly_name": "Support Line",
+      "sid": "PNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+      "phone_number": "+1234567890",
+      "friendly_name": "(234) 567-890",
       "status": "active",
-      "date_created": "2024-01-01T00:00:00Z",
+      "date_created": "2024-02-28T10:00:00Z",
       "voice": true,
       "sms": true,
       "mms": false
@@ -68,12 +83,4 @@ This object corresponds to the `TwilioOwnedNumber` message in the service defini
 }
 ```
 
-```json 500 - Server error
-{
-  "success": false,
-  "message": "An unexpected internal server error occurred."
-}
-```
-
 </ResponseExample>
-

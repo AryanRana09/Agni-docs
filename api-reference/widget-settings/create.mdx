@@ -1,283 +1,102 @@
 ---
-title: "Create widget settings"
-api: "POST /api/v1/widget-settings"
-description: "Create a new widget settings configuration for deploying web agents."
+title: "Create Widget Settings"
+openapi: "POST /api/v1/widget-settings"
+description: "Create widget settings used by your web widget."
 ---
 
 ### Authorizations
 
-<ParamField header="Authorization" type="string" required>
-  Authentication header containing API token (find it in dashboard). The format is "Bearer YOUR_API_KEY".
-</ParamField>
+#### Authorization
 
-<ParamField header="Content-Type" type="string" required>
-  Must be set to `application/json`.
-</ParamField>
+`string` header `required`
 
+Use `Bearer YOUR_API_KEY`.
 
 ### Body
 
-<ParamField body="bot_name" type="string" required>
-  The display name for the bot shown in the widget interface.
-  
-  **Example:**
-  `"Ava"`
-</ParamField>
+`application/json`
 
-<ParamField body="bot_auto_start" type="boolean" required>
-  Whether the widget automatically initiates the conversation when loaded.
-  
-  **Example:**
-  `true`
-</ParamField>
+#### bot_name
 
-<ParamField body="bot_position" type="string" required>
-  The on-screen position where the widget will be rendered.
-  
-  **Available options:** `BOT_POSITION_BOTTOM_RIGHT`, `BOT_POSITION_BOTTOM_LEFT`, `BOT_POSITION_TOP_RIGHT`, `BOT_POSITION_TOP_LEFT`
-  
-  **Example:**
-  `"BOT_POSITION_BOTTOM_RIGHT"`
-</ParamField>
+`string` required
 
-<ParamField body="bot_logo" type="string">
-  Direct URL to an image asset (PNG, JPG, SVG) representing the bot's avatar.
-  
-  **Example:**
-  `"https://cdn.ravan.ai/bot-logo.svg"`
-</ParamField>
+Widget bot name.
 
-<ParamField body="svg_logo" type="string">
-  Inline SVG code to be rendered directly as the bot logo.
-</ParamField>
+#### bot_auto_start
 
-<ParamField body="custom_form_fields" type="object" required>
-  JSON schema mapping custom fields you want to collect from the user before starting a chat.
-  
-  <Expandable title="Field Item Attributes">
-    <ParamField body="[field_name].type" type="string">
-      Type of the field (e.g., text, email).
-    </ParamField>
-    <ParamField body="[field_name].required" type="boolean">
-      Whether completing this field is mandatory.
-    </ParamField>
-  </Expandable>
+`boolean`
 
-  **Example:**
-  ```json
-  {
-    "company": {
-      "type": "text",
-      "required": true
-    }
-  }
-  ```
-</ParamField>
+Auto-starts the widget when page loads.
 
-<ParamField body="theme" type="object" required>
-  Configuration object to customize widget colors and styles.
-  
-  <Expandable title="Show child attributes">
-    <ParamField body="primary" type="string">
-      Primary hex color code.
-    </ParamField>
-  </Expandable>
+#### bot_position
 
-  **Example:**
-  ```json
-  {
-    "primary": "#16A34A"
-  }
-  ```
-</ParamField>
+`string`
 
-<ParamField body="language" type="string" required>
-  The localization language code for the widget interface.
-  
-  **Example:**
-  `"en"`
-</ParamField>
+Widget position.
 
-<ParamField body="consent_content" type="string">
-  The explicit text content shown to the user asking for recording or interaction consent.
-  
-  **Example:**
-  `"By continuing, you agree to recording."`
-</ParamField>
+#### language
 
-<ParamField body="consent_title" type="string">
-  The headline text for the consent dialog.
-  
-  **Example:**
-  `"Consent"`
-</ParamField>
+`string`
+
+Widget language code.
+
+#### custom_form_fields
+
+`object`
+
+Custom pre-chat form fields.
+
+#### theme
+
+`object`
+
+Widget theme settings.
 
 <RequestExample>
-<Tabs>
-  <Tab title="JavaScript">
-  ```javascript
-  import Agni from 'agni-sdk';
 
-  const client = new Agni({
-    apiKey: 'YOUR_AGNI_API_KEY',
-  });
+```json
+{
+  "bot_name": "Support Bot",
+  "bot_auto_start": true,
+  "bot_position": "BOT_POSITION_BOTTOM_RIGHT",
+  "language": "en",
+  "custom_form_fields": {},
+  "theme": {}
+}
+```
 
-  const widgetConfig = await client.widget.create({
-    bot_name: "Ava",
-    bot_auto_start: true,
-    bot_position: "BOT_POSITION_BOTTOM_RIGHT",
-    bot_logo: "https://cdn.ravan.ai/bot-logo.svg",
-    custom_form_fields: {
-      "company": {
-        "type": "text",
-        "required": true
-      }
-    },
-    theme: {
-      "primary": "#16A34A"
-    },
-    language: "en",
-    consent_content: "By continuing, you agree to recording.",
-    consent_title: "Consent"
-  });
-
-  console.log(widgetConfig.id);
-  ```
-  </Tab>
-  <Tab title="cURL">
-  ```bash
-  curl -X POST "https://api.ravan.ai/api/v1/widget-settings" \
-    -H "Authorization: Bearer <token>" \
-    -H "Content-Type: application/json" \
-    -d '{
-      "bot_name": "Ava",
-      "bot_auto_start": true,
-      "bot_position": "BOT_POSITION_BOTTOM_RIGHT",
-      "bot_logo": "https://cdn.ravan.ai/bot-logo.svg",
-      "custom_form_fields": {
-        "company": {
-          "type": "text",
-          "required": true
-        }
-      },
-      "theme": {
-        "primary": "#16A34A"
-      },
-      "language": "en",
-      "consent_content": "By continuing, you agree to recording.",
-      "consent_title": "Consent"
-    }'
-  ```
-  </Tab>
-</Tabs>
 </RequestExample>
-
 
 ### Response
 
-<ResponseField name="success" type="boolean" required>
-  Whether the request succeeded.
-  
-  **Example:**
-  `true`
-</ResponseField>
+#### 201 application/json
 
-<ResponseField name="message" type="string" required>
-  Response message indicating the status of the operation.
-  
-  **Example:**
-  `"Widget settings created successfully"`
-</ResponseField>
+#### success
 
-<ResponseField name="data" type="object">
-  The generated widget settings configuration.
-  
-  <Expandable title="Show child attributes">
-    <ResponseField name="id" type="integer" required>
-      Widget settings ID.
-    </ResponseField>
-    
-    <ResponseField name="bot_name" type="string" required>
-      Displayed bot name.
-    </ResponseField>
+`boolean` required
 
-    <ResponseField name="bot_auto_start" type="boolean" required>
-      Whether auto-start is enabled.
-    </ResponseField>
+#### message
 
-    <ResponseField name="bot_position" type="string" required>
-      The widget position enum value.
-    </ResponseField>
+`string` required
 
-    <ResponseField name="bot_logo" type="string">
-      Logo URL if provided.
-    </ResponseField>
+#### data
 
-    <ResponseField name="svg_logo" type="string">
-      Inline SVG content if provided.
-    </ResponseField>
+`object` required
 
-    <ResponseField name="custom_form_fields" type="object" required>
-      Custom fields object.
-    </ResponseField>
+#### data.id
 
-    <ResponseField name="theme" type="object" required>
-      Theme properties.
-    </ResponseField>
-
-    <ResponseField name="language" type="string" required>
-      Localization code.
-    </ResponseField>
-
-    <ResponseField name="consent_content" type="string">
-      Consent content string.
-    </ResponseField>
-
-    <ResponseField name="consent_title" type="string">
-      Consent headline string.
-    </ResponseField>
-
-    <ResponseField name="is_active" type="boolean" required>
-      Whether the settings are active and visible.
-    </ResponseField>
-
-    <ResponseField name="created_at" type="string" required>
-      Creation timestamp.
-    </ResponseField>
-    
-    <ResponseField name="updated_at" type="string" required>
-      Update timestamp.
-    </ResponseField>
-  </Expandable>
-</ResponseField>
+`integer` required
 
 <ResponseExample>
-<Tabs>
-  <Tab title="201">
-  ```json
-  {
-    "success": true,
-    "message": "Widget settings created successfully",
-    "data": {
-      "id": 12,
-      "bot_name": "Ava",
-      "bot_auto_start": true,
-      "bot_position": "BOT_POSITION_BOTTOM_RIGHT",
-      "language": "en",
-      "is_active": true,
-      "created_at": "2026-03-06T06:40:00Z",
-      "updated_at": "2026-03-06T06:40:00Z"
-    }
+
+```json 201
+{
+  "success": true,
+  "message": "Widget created",
+  "data": {
+    "id": 1
   }
-  ```
-  </Tab>
-  <Tab title="400">
-  ```json
-  {
-    "success": false,
-    "message": "Validation Error: 'bot_position' must be a valid BOT_POSITION enum"
-  }
-  ```
-  </Tab>
-</Tabs>
+}
+```
+
 </ResponseExample>

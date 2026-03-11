@@ -1,6 +1,93 @@
 ---
-title: "Get Agent Tool"
-openapi: "GET /api/v1/tools/{id}?organizationId=string"
+title: "Get Tool"
+openapi: "GET /api/v1/tools/{id}"
+description: "Get one tool by id."
 ---
 
+### Authorizations
 
+#### Authorization
+
+`string` header `required`
+
+Use `Bearer YOUR_API_KEY`.
+
+### Path parameters
+
+#### id
+
+`integer` required
+
+Tool id.
+
+### Query parameters
+
+#### organization_id
+
+`string` required
+
+Organization id.
+
+### Response
+
+#### 200 application/json
+
+#### success
+
+`boolean` required
+
+#### message
+
+`string` required
+
+#### data
+
+`object` required
+
+#### data.id
+
+`integer` required
+
+#### data.organization_id
+
+`string` required
+
+#### data.name
+
+`string` required
+
+#### data.description
+
+`string`
+
+#### data.type
+
+`string` required
+
+#### data.definition
+
+`object` required
+
+#### data.is_active
+
+`boolean` required
+
+<ResponseExample>
+
+```json 200
+{
+  "success": true,
+  "message": "Tool fetched",
+  "data": {
+    "id": 1,
+    "organization_id": "org_123",
+    "name": "Create Todo",
+    "description": "Creates a todo task",
+    "type": "api",
+    "definition": {},
+    "is_active": true
+  }
+}
+```
+
+</ResponseExample>

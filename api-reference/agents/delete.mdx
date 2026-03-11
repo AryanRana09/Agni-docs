@@ -1,6 +1,54 @@
 ---
 title: "Delete Agent"
-openapi: "DELETE /api/v1/agents/{id}?organizationId=string"
+openapi: "DELETE /api/v1/agents/{id}"
+description: "Delete an agent."
 ---
 
+### Authorizations
 
+#### Authorization
+
+`string` header `required`
+
+Bearer token in format `Bearer YOUR_API_KEY`.
+
+### Path parameters
+
+#### id
+
+`integer` required
+
+Agent id.
+
+### Query parameters
+
+#### organization_id
+
+`string` required
+
+Organization id.
+
+### Response
+
+#### 200 application/json
+
+#### success
+
+`boolean` required
+
+#### message
+
+`string` required
+
+Example: `"Agent deleted"`
+
+<ResponseExample>
+
+```json 200
+{
+  "success": true,
+  "message": "Agent deleted"
+}
+```
+
+</ResponseExample>

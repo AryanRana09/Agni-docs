@@ -1,106 +1,115 @@
 ---
 title: "List Purchased Numbers"
 openapi: "GET /api/v1/list-phone-numbers"
-description: "Retrieve all phone numbers that have been purchased for your account."
+description: "List phone numbers already purchased for your account."
 ---
 
-### Overview
+### Authorizations
 
-Use this endpoint to **list phone numbers you have already purchased**, optionally filtered by region, country, and active status.
+#### Authorization
 
-The base URL for all requests from the playground is `https://api.ravan.ai/api/v1`.
+`string` header `required`
 
-### Authorization
-
-- **Authorization**: `Bearer YOUR_API_KEY` (header, required)  
-  Example: `Authorization: Bearer sk_live_xxx`
-
-### HTTP request
-
-- **Method**: `GET`  
-- **Path**: `/list-phone-numbers`
+Use `Bearer YOUR_API_KEY`.
 
 ### Query parameters
 
-| Name         | Type    | Required | Description                                                        | Example   |
-| ------------ | ------- | -------- | ------------------------------------------------------------------ | --------- |
-| `region`     | string  | No       | Region or area within the country (for example, state or city).   | `"CA"`    |
-| `isoCountry` | string  | No       | Two-letter ISO country code to filter phone numbers by.           | `"US"`    |
-| `isActive`   | boolean | No       | Filter by active status. If omitted, all numbers are returned.    | `true`    |
+#### region
 
-### Successful response (200)
+`string`
 
-On success, the API returns a list of purchased numbers.
+Region or state filter, for example `NY`.
 
-#### Top-level fields
+#### iso_country
 
-| Field     | Type                     | Description                                   |
-| --------- | ------------------------ | --------------------------------------------- |
-| `success` | boolean                  | Indicates whether the request was successful. |
-| `message` | string                   | Human-readable message about the operation.   |
-| `data`    | array\<PurchasedNumber>  | List of purchased phone numbers.             |
+`string`
 
-#### `PurchasedNumber` object
+Two-letter ISO country code, for example `US`.
 
-| Field                    | Type    | Description                                                     | Example                   |
-| ------------------------ | ------- | --------------------------------------------------------------- | ------------------------- |
-| `id`                     | string  | Unique identifier for the purchased number.                    | `"pn_123"`                |
-| `telephony_id`           | string  | Identifier of the telephony provider configuration.            | `"tel_123"`               |
-| `subscription_id`        | string  | Identifier of the subscription associated with this number.    | `"sub_123"`               |
-| `inbound_trunk_id`       | string  | Identifier of the inbound trunk used for this number.          | `"in_trunk_1"`            |
-| `outbound_trunk_id`      | string  | Identifier of the outbound trunk used for this number.         | `"out_trunk_1"`           |
-| `number`                 | string  | Phone number in E.164 format.                                  | `"+14157774444"`          |
-| `friendly_name`          | string  | Human-readable label for the number.                           | `"Support Line"`          |
-| `per_minute_price_inbound`  | int32 | Per-minute price for inbound calls in minor units.             | `1`                       |
-| `per_minute_price_outbound` | int32 | Per-minute price for outbound calls in minor units.            | `2`                       |
-| `price`                  | int32   | One-time purchase price for the number in minor units.         | `100`                     |
-| `region`                 | string  | Region or area associated with the number.                     | `"CA"`                    |
-| `iso_country`            | string  | Two-letter ISO country code.                                   | `"US"`                    |
-| `is_active`              | boolean | Whether the number is currently active.                        | `true`                    |
-| `created_at`             | string  | ISO 8601 timestamp when the number was created.                | `"2024-01-01T00:00:00Z"`  |
-| `updated_at`             | string  | ISO 8601 timestamp when the number was last updated.           | `"2024-01-02T00:00:00Z"`  |
+#### is_active
+
+`boolean`
+
+Filter by active status.
+
+### Response
+
+#### 200 application/json
+
+#### success
+
+`boolean` required
+
+#### message
+
+`string` required
+
+#### data
+
+`object[]` required
+
+#### data[].id
+
+`string` required
+
+#### data[].number
+
+`string` required
+
+#### data[].friendly_name
+
+`string`
+
+#### data[].region
+
+`string`
+
+#### data[].iso_country
+
+`string`
+
+#### data[].is_active
+
+`boolean` required
+
+#### data[].created_at
+
+`string` required
+
+ISO 8601 timestamp.
+
+#### data[].updated_at
+
+`string` required
+
+ISO 8601 timestamp.
 
 <ResponseExample>
 
-```json 200 - Success
+```json 200
 {
   "success": true,
-  "message": "Purchased numbers retrieved successfully.",
+  "message": "Purchased numbers retrieved successfully",
   "data": [
     {
-      "id": "pn_123",
-      "telephony_id": "tel_123",
-      "subscription_id": "sub_123",
-      "inbound_trunk_id": "in_trunk_1",
-      "outbound_trunk_id": "out_trunk_1",
-      "number": "+14157774444",
-      "friendly_name": "Support Line",
+      "id": "uuid-string",
+      "telephony_id": "uuid-string",
+      "subscription_id": "sub_...",
+      "inbound_trunk_id": "uuid-string",
+      "outbound_trunk_id": "uuid-string",
+      "number": "+1234567890",
+      "friendly_name": "Main Support Line",
       "per_minute_price_inbound": 1,
-      "per_minute_price_outbound": 2,
-      "price": 100,
-      "region": "CA",
+      "per_minute_price_outbound": 1,
+      "price": 200,
+      "region": "NY",
       "iso_country": "US",
       "is_active": true,
-      "created_at": "2024-01-01T00:00:00Z",
-      "updated_at": "2024-01-02T00:00:00Z"
+      "created_at": "2024-03-01T10:00:00Z",
+      "updated_at": "2024-03-03T12:00:00Z"
     }
   ]
 }
 ```
 
-```json 400 - Validation error
-{
-  "success": false,
-  "message": "Invalid filter parameters."
-}
-```
-
-```json 500 - Server error
-{
-  "success": false,
-  "message": "An unexpected internal server error occurred."
-}
-```
-
 </ResponseExample>
-
