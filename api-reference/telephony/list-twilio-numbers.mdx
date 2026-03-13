@@ -1,83 +1,81 @@
 ---
 title: "List Twilio Owned Numbers"
-openapi: "GET /api/v1/twilio-owned-numbers"
-description: "List all phone numbers in your connected Twilio account."
+openapi: "GET /api/v1/twilio-owned-numbers/"
+description: "List Twilio Owned Numbers."
 ---
 
 ### Authorizations
 
-#### Authorization
+<ParamField header="X-Api-Key" type="string" required>
+  Your Agni API key. Find it in your [dashboard](https://dashboard.ravan.ai).
+</ParamField>
 
-`string` header `required`
-
-Use `Bearer YOUR_API_KEY`.
+---
 
 ### Response
 
-#### 200 application/json
+<ResponseField name="success" type="boolean">
+  Whether the request succeeded.
+</ResponseField>
 
-#### success
+<ResponseField name="message" type="string">
+  Human-readable status message.
+</ResponseField>
 
-`boolean` required
+<ResponseField name="data" type="object[]">
+  Returned data.
 
-#### message
+  <Expandable title="data[]">
+    <ResponseField name="sid" type="string">
+      Twilio SID
+    </ResponseField>
 
-`string` required
+    <ResponseField name="phone_number" type="string">
+      Phone number in E.164 format
+    </ResponseField>
 
-#### data
+    <ResponseField name="friendly_name" type="string">
+      Friendly label
+    </ResponseField>
 
-`object[]` required
+    <ResponseField name="status" type="string">
+      Number status
+    </ResponseField>
 
-#### data[].sid
+    <ResponseField name="date_created" type="string">
+      Date created in Twilio
+    </ResponseField>
 
-`string` required
+    <ResponseField name="voice" type="boolean">
+      Voice capability enabled
+    </ResponseField>
 
-#### data[].phone_number
+    <ResponseField name="sms" type="boolean">
+      SMS capability enabled
+    </ResponseField>
 
-`string` required
-
-#### data[].friendly_name
-
-`string`
-
-#### data[].status
-
-`string`
-
-#### data[].date_created
-
-`string`
-
-ISO 8601 timestamp.
-
-#### data[].voice
-
-`boolean`
-
-#### data[].sms
-
-`boolean`
-
-#### data[].mms
-
-`boolean`
+    <ResponseField name="mms" type="boolean">
+      MMS capability enabled
+    </ResponseField>
+  </Expandable>
+</ResponseField>
 
 <ResponseExample>
 
 ```json 200
 {
   "success": true,
-  "message": "Twilio owned numbers retrieved successfully",
+  "message": "Request completed successfully",
   "data": [
     {
-      "sid": "PNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-      "phone_number": "+1234567890",
-      "friendly_name": "(234) 567-890",
+      "sid": "example",
+      "phone_number": "+14155550100",
+      "friendly_name": "Support Bot",
       "status": "active",
-      "date_created": "2024-02-28T10:00:00Z",
+      "date_created": "example",
       "voice": true,
       "sms": true,
-      "mms": false
+      "mms": true
     }
   ]
 }

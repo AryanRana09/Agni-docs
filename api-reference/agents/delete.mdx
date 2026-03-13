@@ -1,53 +1,41 @@
 ---
 title: "Delete Agent"
-openapi: "DELETE /api/v1/agents/{id}"
-description: "Delete an agent."
+openapi: "DELETE /api/v1/agents/{id}/"
+description: "Delete Agent."
 ---
 
 ### Authorizations
 
-#### Authorization
+<ParamField header="X-Api-Key" type="string" required>
+  Your Agni API key. Find it in your [dashboard](https://dashboard.ravan.ai).
+</ParamField>
 
-`string` header `required`
+---
 
-Bearer token in format `Bearer YOUR_API_KEY`.
+### Path Parameters
 
-### Path parameters
+<ParamField path="id" type="string" required>
+  Agent ID
+</ParamField>
 
-#### id
-
-`integer` required
-
-Agent id.
-
-### Query parameters
-
-#### organization_id
-
-`string` required
-
-Organization id.
+---
 
 ### Response
 
-#### 200 application/json
+<ResponseField name="success" type="boolean">
+  Whether the request succeeded.
+</ResponseField>
 
-#### success
-
-`boolean` required
-
-#### message
-
-`string` required
-
-Example: `"Agent deleted"`
+<ResponseField name="message" type="string">
+  Human-readable status message.
+</ResponseField>
 
 <ResponseExample>
 
 ```json 200
 {
   "success": true,
-  "message": "Agent deleted"
+  "message": "Request completed successfully"
 }
 ```
 

@@ -1,79 +1,111 @@
 ---
-title: "List Tools"
-openapi: "GET /api/v1/tools"
-description: "List tools in an organization with pagination."
+title: "List Agent Tools"
+openapi: "GET /api/v1/tools/"
+description: "List Agent Tools."
 ---
 
 ### Authorizations
 
-#### Authorization
+<ParamField header="X-Api-Key" type="string" required>
+  Your Agni API key. Find it in your [dashboard](https://dashboard.ravan.ai).
+</ParamField>
 
-`string` header `required`
+---
 
-Use `Bearer YOUR_API_KEY`.
+### Query Parameters
 
-### Query parameters
+<ParamField query="limit" type="integer">
+  Number of results to return
+</ParamField>
 
-#### organization_id
+<ParamField query="offset" type="integer">
+  Pagination offset
+</ParamField>
 
-`string` required
-
-Organization id.
-
-#### limit
-
-`integer`
-
-Number of records to return.
-
-#### offset
-
-`integer`
-
-Number of records to skip.
+---
 
 ### Response
 
-#### 200 application/json
+<ResponseField name="success" type="boolean">
+  Whether the request succeeded.
+</ResponseField>
 
-#### success
+<ResponseField name="message" type="string">
+  Human-readable status message.
+</ResponseField>
 
-`boolean` required
+<ResponseField name="data" type="object[]">
+  Returned data.
 
-#### message
+  <Expandable title="data[]">
+    <ResponseField name="id" type="string">
+      Unique tool ID
+    </ResponseField>
 
-`string` required
+    <ResponseField name="organization_id" type="string">
+      Organization this tool belongs to
+    </ResponseField>
 
-#### data
+    <ResponseField name="name" type="string">
+      Tool name
+    </ResponseField>
 
-`object[]` required
+    <ResponseField name="description" type="string">
+      Tool description
+    </ResponseField>
 
-#### meta
+    <ResponseField name="type" type="string">
+      Tool type (e.g. webhook, function)
+    </ResponseField>
 
-`object` required
+    <ResponseField name="definition" type="object">
+      Tool definition schema
+    </ResponseField>
 
-#### meta.total
+    <ResponseField name="is_active" type="boolean">
+      Whether the tool is active
+    </ResponseField>
+  </Expandable>
+</ResponseField>
 
-`integer` required
+<ResponseField name="meta" type="object">
+  Pagination metadata.
 
-#### meta.limit
+  <Expandable title="meta">
+    <ResponseField name="total" type="integer">
+      Total number of records
+    </ResponseField>
 
-`integer` required
+    <ResponseField name="limit" type="integer">
+      Page size limit
+    </ResponseField>
 
-#### meta.offset
-
-`integer` required
+    <ResponseField name="offset" type="integer">
+      Pagination offset
+    </ResponseField>
+  </Expandable>
+</ResponseField>
 
 <ResponseExample>
 
 ```json 200
 {
   "success": true,
-  "message": "Tools fetched",
-  "data": [],
+  "message": "Request completed successfully",
+  "data": [
+    {
+      "id": "id_123",
+      "organization_id": "organization_123",
+      "name": "Support Bot",
+      "description": "Example description",
+      "type": "twilio",
+      "definition": {},
+      "is_active": true
+    }
+  ],
   "meta": {
     "total": 1,
-    "limit": 10,
+    "limit": 20,
     "offset": 0
   }
 }

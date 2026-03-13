@@ -1,89 +1,81 @@
 ---
-title: "Get Tool"
-openapi: "GET /api/v1/tools/{id}"
-description: "Get one tool by id."
+title: "Get Agent Tool"
+openapi: "GET /api/v1/tools/{id}/"
+description: "Get Agent Tool."
 ---
 
 ### Authorizations
 
-#### Authorization
+<ParamField header="X-Api-Key" type="string" required>
+  Your Agni API key. Find it in your [dashboard](https://dashboard.ravan.ai).
+</ParamField>
 
-`string` header `required`
+---
 
-Use `Bearer YOUR_API_KEY`.
+### Path Parameters
 
-### Path parameters
+<ParamField path="id" type="string" required>
+  Tool ID
+</ParamField>
 
-#### id
-
-`integer` required
-
-Tool id.
-
-### Query parameters
-
-#### organization_id
-
-`string` required
-
-Organization id.
+---
 
 ### Response
 
-#### 200 application/json
+<ResponseField name="success" type="boolean">
+  Whether the request succeeded.
+</ResponseField>
 
-#### success
+<ResponseField name="message" type="string">
+  Human-readable status message.
+</ResponseField>
 
-`boolean` required
+<ResponseField name="data" type="object">
+  Returned data.
 
-#### message
+  <Expandable title="data">
+    <ResponseField name="id" type="string">
+      Unique tool ID
+    </ResponseField>
 
-`string` required
+    <ResponseField name="organization_id" type="string">
+      Organization this tool belongs to
+    </ResponseField>
 
-#### data
+    <ResponseField name="name" type="string">
+      Tool name
+    </ResponseField>
 
-`object` required
+    <ResponseField name="description" type="string">
+      Tool description
+    </ResponseField>
 
-#### data.id
+    <ResponseField name="type" type="string">
+      Tool type (e.g. webhook, function)
+    </ResponseField>
 
-`integer` required
+    <ResponseField name="definition" type="object">
+      Tool definition schema
+    </ResponseField>
 
-#### data.organization_id
-
-`string` required
-
-#### data.name
-
-`string` required
-
-#### data.description
-
-`string`
-
-#### data.type
-
-`string` required
-
-#### data.definition
-
-`object` required
-
-#### data.is_active
-
-`boolean` required
+    <ResponseField name="is_active" type="boolean">
+      Whether the tool is active
+    </ResponseField>
+  </Expandable>
+</ResponseField>
 
 <ResponseExample>
 
 ```json 200
 {
   "success": true,
-  "message": "Tool fetched",
+  "message": "Request completed successfully",
   "data": {
-    "id": 1,
-    "organization_id": "org_123",
-    "name": "Create Todo",
-    "description": "Creates a todo task",
-    "type": "api",
+    "id": "id_123",
+    "organization_id": "organization_123",
+    "name": "Support Bot",
+    "description": "Example description",
+    "type": "twilio",
     "definition": {},
     "is_active": true
   }

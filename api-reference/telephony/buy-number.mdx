@@ -1,103 +1,80 @@
 ---
 title: "Buy Phone Number"
-openapi: "POST /api/v1/phone-numbers/buy"
-description: "Purchase a phone number returned by the availability endpoint."
+openapi: "POST /api/v1/phone-numbers/buy/"
+description: "Buy Phone Number."
 ---
 
 ### Authorizations
 
-#### Authorization
+<ParamField header="X-Api-Key" type="string" required>
+  Your Agni API key. Find it in your [dashboard](https://dashboard.ravan.ai).
+</ParamField>
 
-`string` header `required`
-
-Use `Bearer YOUR_API_KEY`.
+---
 
 ### Body
 
-`application/json`
+<ParamField body="phone_number" type="string">
+  Phone number to purchase (E.164 format)
+</ParamField>
 
-#### phone_number
+<ParamField body="price" type="number">
+  Purchase price
+</ParamField>
 
-`string` required
+<ParamField body="per_minute_price_inbound" type="integer">
+  Per-minute inbound call price
+</ParamField>
 
-Phone number in E.164 format.
+<ParamField body="per_minute_price_outbound" type="integer">
+  Per-minute outbound call price
+</ParamField>
 
-#### price
-
-`number` required
-
-Purchase price for the number.
-
-#### per_minute_price_inbound
-
-`number` required
-
-Inbound per-minute rate.
-
-#### per_minute_price_outbound
-
-`number` required
-
-Outbound per-minute rate.
-
-<RequestExample>
-
-```json
-{
-  "phone_number": "+1234567890",
-  "price": 2.0,
-  "per_minute_price_inbound": 1,
-  "per_minute_price_outbound": 1
-}
-```
-
-</RequestExample>
+---
 
 ### Response
 
-#### 201 application/json
+<ResponseField name="success" type="boolean">
+  Whether the request succeeded.
+</ResponseField>
 
-#### success
+<ResponseField name="message" type="string">
+  Human-readable status message.
+</ResponseField>
 
-`boolean` required
+<ResponseField name="data" type="object">
+  Returned data.
 
-#### message
+  <Expandable title="data">
+    <ResponseField name="phone_number" type="string">
+      The purchased phone number
+    </ResponseField>
 
-`string` required
+    <ResponseField name="price" type="number">
+      Price paid
+    </ResponseField>
 
-#### data
+    <ResponseField name="status" type="string">
+      Purchase status
+    </ResponseField>
 
-`object` required
-
-#### data.phone_number
-
-`string` required
-
-#### data.price
-
-`number` required
-
-#### data.status
-
-`string` required
-
-#### data.purchased_at
-
-`string` required
-
-ISO 8601 timestamp.
+    <ResponseField name="purchased_at" type="string">
+      Timestamp of purchase
+    </ResponseField>
+  </Expandable>
+</ResponseField>
 
 <ResponseExample>
 
-```json 201
+```json 200
 {
   "success": true,
-  "message": "Phone number purchased successfully",
+  "message": "Request completed successfully",
   "data": {
-    "phone_number": "+1234567890",
-    "price": 2.0,
+    "phone_number": "+14155550100",
+    "price": 1.99,
     "status": "active",
-    "purchased_at": "2024-03-03T16:05:25Z"
+    "purchased_at": "2026-03-14T12:00:00Z"
   }
 }
 ```

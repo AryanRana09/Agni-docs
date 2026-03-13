@@ -1,120 +1,109 @@
 ---
-title: "Create Telephony Config"
-openapi: "POST /api/v1/create/telephony"
-description: "Configure a telephony provider such as Twilio."
+title: "Create Telephony Type"
+openapi: "POST /api/v1/create/telephony/"
+description: "Create Telephony Type."
 ---
 
 ### Authorizations
 
-#### Authorization
+<ParamField header="X-Api-Key" type="string" required>
+  Your Agni API key. Find it in your [dashboard](https://dashboard.ravan.ai).
+</ParamField>
 
-`string` header `required`
-
-Use `Bearer YOUR_API_KEY`.
+---
 
 ### Body
 
-`application/json`
+<ParamField body="type" type="string">
+  Telephony provider type (e.g. twilio, vonage)
+</ParamField>
 
-#### type
+<ParamField body="owner_type" type="string">
+  Owner type (e.g. organization, user)
+</ParamField>
 
-`string` required
+<ParamField body="friendly_name" type="string">
+  Human-readable label for this telephony config
+</ParamField>
 
-Telephony provider type, for example `twilio`.
+<ParamField body="client_id" type="string">
+  Provider client/account ID
+</ParamField>
 
-#### owner_type
+<ParamField body="client_secret" type="string">
+  Provider client secret or auth token
+</ParamField>
 
-`string` required
-
-Owner scope for this config.
-
-#### friendly_name
-
-`string` required
-
-Display name for the integration.
-
-#### client_id
-
-`string` required
-
-Provider account id.
-
-#### client_secret
-
-`string` required
-
-Provider account secret.
-
-<RequestExample>
-
-```json
-{
-  "type": "twilio",
-  "owner_type": "platform",
-  "friendly_name": "Primary Twilio Account",
-  "client_id": "ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-  "client_secret": "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY"
-}
-```
-
-</RequestExample>
+---
 
 ### Response
 
-#### 201 application/json
+<ResponseField name="success" type="boolean">
+  Whether the request succeeded.
+</ResponseField>
 
-#### success
+<ResponseField name="message" type="string">
+  Human-readable status message.
+</ResponseField>
 
-`boolean` required
+<ResponseField name="data" type="object">
+  Returned data.
 
-#### message
+  <Expandable title="data">
+    <ResponseField name="id" type="string">
+      id field.
+    </ResponseField>
 
-`string` required
+    <ResponseField name="type" type="string">
+      type field.
+    </ResponseField>
 
-#### data
+    <ResponseField name="owner_type" type="string">
+      owner_type field.
+    </ResponseField>
 
-`object` required
+    <ResponseField name="friendly_name" type="string">
+      friendly_name field.
+    </ResponseField>
 
-#### data.id
+    <ResponseField name="status" type="string">
+      status field.
+    </ResponseField>
 
-`string` required
+    <ResponseField name="created_at" type="string">
+      created_at field.
+    </ResponseField>
 
-#### data.type
+    <ResponseField name="termination_uri" type="string">
+      termination_uri field.
+    </ResponseField>
 
-`string` required
+    <ResponseField name="sip_username" type="string">
+      sip_username field.
+    </ResponseField>
 
-#### data.owner_type
-
-`string` required
-
-#### data.friendly_name
-
-`string` required
-
-#### data.status
-
-`string` required
-
-#### data.created_at
-
-`string` required
-
-ISO 8601 timestamp.
+    <ResponseField name="sip_password" type="string">
+      sip_password field.
+    </ResponseField>
+  </Expandable>
+</ResponseField>
 
 <ResponseExample>
 
-```json 201
+```json 200
 {
   "success": true,
-  "message": "Telephony configuration created successfully",
+  "message": "Request completed successfully",
   "data": {
-    "id": "uuid-string",
+    "id": "id_123",
     "type": "twilio",
-    "owner_type": "platform",
-    "friendly_name": "Primary Twilio Account",
+    "owner_type": "twilio",
+    "friendly_name": "Support Bot",
     "status": "active",
-    "created_at": "2024-03-03T16:16:26Z"
+    "created_at": "2026-03-14T12:00:00Z",
+    "termination_uri": "sip:example@provider.com",
+    "sip_username": "sip-user",
+    "sip_password": "secret-password"
   }
 }
 ```

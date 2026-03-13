@@ -1,65 +1,63 @@
 ---
 title: "Release Phone Number"
-openapi: "DELETE /api/v1/phone-numbers/{phone_number}/release"
-description: "Release a purchased phone number back to the provider."
+openapi: "DELETE /api/v1/phone-numbers/{phone_number}/release/"
+description: "Release Phone Number."
 ---
 
 ### Authorizations
 
-#### Authorization
+<ParamField header="X-Api-Key" type="string" required>
+  Your Agni API key. Find it in your [dashboard](https://dashboard.ravan.ai).
+</ParamField>
 
-`string` header `required`
+---
 
-Use `Bearer YOUR_API_KEY`.
+### Path Parameters
 
-### Path parameters
+<ParamField path="phone_number" type="string" required>
+  The phone number to release (E.164 format, e.g. +12025551234)
+</ParamField>
 
-#### phone_number
-
-`string` required
-
-Purchased phone number in E.164 format.
+---
 
 ### Response
 
-#### 200 application/json
+<ResponseField name="success" type="boolean">
+  Whether the request succeeded.
+</ResponseField>
 
-#### success
+<ResponseField name="message" type="string">
+  Human-readable status message.
+</ResponseField>
 
-`boolean` required
+<ResponseField name="data" type="object">
+  Returned data.
 
-#### message
+  <Expandable title="data">
+    <ResponseField name="phone_number" type="string">
+      The released phone number
+    </ResponseField>
 
-`string` required
+    <ResponseField name="status" type="string">
+      Release status
+    </ResponseField>
 
-#### data
-
-`object` required
-
-#### data.phone_number
-
-`string` required
-
-#### data.status
-
-`string` required
-
-#### data.released_at
-
-`string` required
-
-ISO 8601 timestamp.
+    <ResponseField name="released_at" type="string">
+      Timestamp of release
+    </ResponseField>
+  </Expandable>
+</ResponseField>
 
 <ResponseExample>
 
 ```json 200
 {
   "success": true,
-  "message": "Phone number released successfully",
+  "message": "Request completed successfully",
   "data": {
-    "phone_number": "+1234567890",
-    "status": "released",
-    "released_at": "2024-03-03T16:16:26Z"
+    "phone_number": "+14155550100",
+    "status": "active",
+    "released_at": "example"
   }
 }
 ```

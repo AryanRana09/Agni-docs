@@ -1,130 +1,113 @@
 ---
 title: "Import Phone Number"
-openapi: "POST /api/v1/phone-numbers/import"
-description: "Import an existing phone number or SIP trunk."
+openapi: "POST /api/v1/phone-numbers/import/"
+description: "Import Phone Number."
 ---
 
 ### Authorizations
 
-#### Authorization
+<ParamField header="X-Api-Key" type="string" required>
+  Your Agni API key. Find it in your [dashboard](https://dashboard.ravan.ai).
+</ParamField>
 
-`string` header `required`
-
-Use `Bearer YOUR_API_KEY`.
+---
 
 ### Body
 
-`application/json`
+<ParamField body="phone" type="string">
+  Phone number to import (E.164 format)
+</ParamField>
 
-#### phone
+<ParamField body="type" type="string">
+  Type of phone number (e.g. sip, pstn)
+</ParamField>
 
-`string` required
+<ParamField body="name" type="string">
+  Friendly name for the number
+</ParamField>
 
-Phone number in E.164 format.
+<ParamField body="termination_uri" type="string">
+  SIP termination URI
+</ParamField>
 
-#### type
+<ParamField body="sip_username" type="string">
+  SIP username for authentication
+</ParamField>
 
-`string` required
+<ParamField body="sip_password" type="string">
+  SIP password for authentication
+</ParamField>
 
-Phone number source type.
-
-#### name
-
-`string` required
-
-Display name for this imported number.
-
-#### termination_uri
-
-`string`
-
-SIP termination URI.
-
-#### sip_username
-
-`string`
-
-SIP username.
-
-#### sip_password
-
-`string`
-
-SIP password.
-
-<RequestExample>
-
-```json
-{
-  "phone": "+1234567890",
-  "type": "custom",
-  "name": "External SIP Office",
-  "termination_uri": "sip:gw.example.com",
-  "sip_username": "myuser",
-  "sip_password": "mypassword"
-}
-```
-
-</RequestExample>
+---
 
 ### Response
 
-#### 201 application/json
+<ResponseField name="success" type="boolean">
+  Whether the request succeeded.
+</ResponseField>
 
-#### success
+<ResponseField name="message" type="string">
+  Human-readable status message.
+</ResponseField>
 
-`boolean` required
+<ResponseField name="data" type="object">
+  Returned data.
 
-#### message
+  <Expandable title="data">
+    <ResponseField name="id" type="string">
+      id field.
+    </ResponseField>
 
-`string` required
+    <ResponseField name="phone" type="string">
+      phone field.
+    </ResponseField>
 
-#### data
+    <ResponseField name="type" type="string">
+      type field.
+    </ResponseField>
 
-`object` required
+    <ResponseField name="name" type="string">
+      name field.
+    </ResponseField>
 
-#### data.id
+    <ResponseField name="termination_uri" type="string">
+      termination_uri field.
+    </ResponseField>
 
-`string` required
+    <ResponseField name="sip_username" type="string">
+      sip_username field.
+    </ResponseField>
 
-#### data.phone
+    <ResponseField name="sip_password" type="string">
+      sip_password field.
+    </ResponseField>
 
-`string` required
+    <ResponseField name="status" type="string">
+      status field.
+    </ResponseField>
 
-#### data.type
-
-`string` required
-
-#### data.name
-
-`string` required
-
-#### data.status
-
-`string` required
-
-#### data.created_at
-
-`string` required
-
-ISO 8601 timestamp.
+    <ResponseField name="created_at" type="string">
+      created_at field.
+    </ResponseField>
+  </Expandable>
+</ResponseField>
 
 <ResponseExample>
 
-```json 201
+```json 200
 {
   "success": true,
-  "message": "Phone number imported successfully",
+  "message": "Request completed successfully",
   "data": {
-    "id": "uuid-string",
-    "phone": "+1234567890",
-    "type": "custom",
-    "name": "External SIP Office",
-    "termination_uri": "sip:gw.example.com",
-    "sip_username": "myuser",
-    "sip_password": "mypassword",
+    "id": "id_123",
+    "phone": "+14155550100",
+    "type": "twilio",
+    "name": "Support Bot",
+    "termination_uri": "sip:example@provider.com",
+    "sip_username": "sip-user",
+    "sip_password": "secret-password",
     "status": "active",
-    "created_at": "2024-03-03T16:16:26Z"
+    "created_at": "2026-03-14T12:00:00Z"
   }
 }
 ```

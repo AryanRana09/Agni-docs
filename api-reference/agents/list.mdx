@@ -1,87 +1,226 @@
 ---
 title: "List Agents"
 openapi: "GET /api/v1/agents/"
-description: "List agents for an organization with pagination."
+description: "List Agents."
 ---
 
 ### Authorizations
 
-#### Authorization
+<ParamField header="X-Api-Key" type="string" required>
+  Your Agni API key. Find it in your [dashboard](https://dashboard.ravan.ai).
+</ParamField>
 
-`string` header `required`
+---
 
-Bearer token in format `Bearer YOUR_API_KEY`.
+### Query Parameters
 
-### Query parameters
+<ParamField query="limit" type="integer">
+  Number of results to return
+</ParamField>
 
-#### organization_id
+<ParamField query="offset" type="integer">
+  Pagination offset
+</ParamField>
 
-`string` required
-
-Organization id.
-
-#### limit
-
-`integer`
-
-Page size.
-
-Example: `10`
-
-#### offset
-
-`integer`
-
-Page offset.
-
-Example: `0`
+---
 
 ### Response
 
-#### 200 application/json
+<ResponseField name="success" type="boolean">
+  Whether the request succeeded.
+</ResponseField>
 
-#### success
+<ResponseField name="message" type="string">
+  Human-readable status message.
+</ResponseField>
 
-`boolean` required
+<ResponseField name="data" type="object[]">
+  Returned data.
 
-#### message
+  <Expandable title="data[]">
+    <ResponseField name="id" type="string">
+      Unique agent ID
+    </ResponseField>
 
-`string` required
+    <ResponseField name="organization_id" type="string">
+      Organization this agent belongs to
+    </ResponseField>
 
-Example: `"Agents fetched"`
+    <ResponseField name="widget_settings_id" type="string">
+      Associated widget settings ID
+    </ResponseField>
 
-#### data
+    <ResponseField name="name" type="string">
+      Internal name of the agent
+    </ResponseField>
 
-`object[]` required
+    <ResponseField name="agent_name" type="string">
+      Display name of the agent
+    </ResponseField>
 
-List of agent records.
+    <ResponseField name="status" type="string">
+      status field. Allowed values: `AGENT_STATUS_UNSPECIFIED`, `AGENT_STATUS_ACTIVE`, `AGENT_STATUS_INACTIVE`.
+    </ResponseField>
 
-#### meta
+    <ResponseField name="model" type="string">
+      LLM model identifier
+    </ResponseField>
 
-`object` required
+    <ResponseField name="s2s_model" type="string">
+      Speech-to-speech model identifier
+    </ResponseField>
 
-#### meta.total
+    <ResponseField name="voice_id" type="string">
+      Voice ID for TTS
+    </ResponseField>
 
-`integer` required
+    <ResponseField name="temperature" type="number">
+      LLM temperature setting
+    </ResponseField>
 
-#### meta.limit
+    <ResponseField name="reminder_trigger_ms" type="integer">
+      Milliseconds before sending a reminder
+    </ResponseField>
 
-`integer` required
+    <ResponseField name="reminder_max_count" type="integer">
+      Maximum number of reminders to send
+    </ResponseField>
 
-#### meta.offset
+    <ResponseField name="ambient_sound" type="string">
+      Ambient sound identifier
+    </ResponseField>
 
-`integer` required
+    <ResponseField name="ambient_sound_volume" type="number">
+      Volume of ambient sound (0.0 - 1.0)
+    </ResponseField>
+
+    <ResponseField name="end_call_after_silence" type="boolean">
+      Whether to end the call after silence
+    </ResponseField>
+
+    <ResponseField name="max_call_duration_ms" type="integer">
+      Maximum call duration in milliseconds
+    </ResponseField>
+
+    <ResponseField name="ring_duration_ms" type="integer">
+      Ring duration in milliseconds
+    </ResponseField>
+
+    <ResponseField name="enable_voicemail_detection" type="boolean">
+      Whether to enable voicemail detection
+    </ResponseField>
+
+    <ResponseField name="voicemail_message" type="string">
+      Message to leave on voicemail
+    </ResponseField>
+
+    <ResponseField name="voicemail_detection_timeout_ms" type="integer">
+      Voicemail detection timeout in milliseconds
+    </ResponseField>
+
+    <ResponseField name="ivr_options" type="object">
+      IVR (Interactive Voice Response) configuration
+    </ResponseField>
+
+    <ResponseField name="post_call_analysis_model" type="string">
+      Model to use for post-call analysis
+    </ResponseField>
+
+    <ResponseField name="analysis_summary_prompt" type="string">
+      Prompt used for generating call summary
+    </ResponseField>
+
+    <ResponseField name="selected_tools" type="object">
+      Tools selected for this agent
+    </ResponseField>
+
+    <ResponseField name="integrations" type="object">
+      Integration configuration
+    </ResponseField>
+
+    <ResponseField name="knowledge_base" type="string">
+      Knowledge base content or reference
+    </ResponseField>
+
+    <ResponseField name="begin_message" type="string">
+      Opening message spoken by the agent
+    </ResponseField>
+
+    <ResponseField name="start_speaker" type="string">
+      Who speaks first: agent or user
+    </ResponseField>
+
+    <ResponseField name="created_at" type="string">
+      Creation timestamp
+    </ResponseField>
+
+    <ResponseField name="updated_at" type="string">
+      Last update timestamp
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="meta" type="object">
+  Pagination metadata.
+
+  <Expandable title="meta">
+    <ResponseField name="total" type="integer">
+      Total number of records
+    </ResponseField>
+
+    <ResponseField name="limit" type="integer">
+      Page size limit
+    </ResponseField>
+
+    <ResponseField name="offset" type="integer">
+      Pagination offset
+    </ResponseField>
+  </Expandable>
+</ResponseField>
 
 <ResponseExample>
 
 ```json 200
 {
   "success": true,
-  "message": "Agents fetched",
-  "data": [],
+  "message": "Request completed successfully",
+  "data": [
+    {
+      "id": "id_123",
+      "organization_id": "organization_123",
+      "widget_settings_id": "widget_settings_123",
+      "name": "Support Bot",
+      "agent_name": "Support Bot",
+      "status": "AGENT_STATUS_ACTIVE",
+      "model": "gpt-4o",
+      "s2s_model": "gpt-4o",
+      "voice_id": "voice_123",
+      "temperature": 0.7,
+      "reminder_trigger_ms": 5000,
+      "reminder_max_count": 1,
+      "ambient_sound": "example",
+      "ambient_sound_volume": 0.3,
+      "end_call_after_silence": true,
+      "max_call_duration_ms": 5000,
+      "ring_duration_ms": 5000,
+      "enable_voicemail_detection": true,
+      "voicemail_message": "en-US-female-1",
+      "voicemail_detection_timeout_ms": 5000,
+      "ivr_options": {},
+      "post_call_analysis_model": "gpt-4o",
+      "analysis_summary_prompt": "example",
+      "selected_tools": {},
+      "integrations": {},
+      "knowledge_base": "example",
+      "begin_message": "Request completed successfully",
+      "start_speaker": "example",
+      "created_at": "2026-03-14T12:00:00Z",
+      "updated_at": "2026-03-14T12:00:00Z"
+    }
+  ],
   "meta": {
     "total": 1,
-    "limit": 10,
+    "limit": 20,
     "offset": 0
   }
 }

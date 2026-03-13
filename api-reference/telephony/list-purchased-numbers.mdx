@@ -1,112 +1,132 @@
 ---
 title: "List Purchased Numbers"
-openapi: "GET /api/v1/list-phone-numbers"
-description: "List phone numbers already purchased for your account."
+openapi: "GET /api/v1/list-phone-numbers/"
+description: "List Purchased Numbers."
 ---
 
 ### Authorizations
 
-#### Authorization
+<ParamField header="X-Api-Key" type="string" required>
+  Your Agni API key. Find it in your [dashboard](https://dashboard.ravan.ai).
+</ParamField>
 
-`string` header `required`
+---
 
-Use `Bearer YOUR_API_KEY`.
+### Query Parameters
 
-### Query parameters
+<ParamField query="region" type="string">
+  Region filter
+</ParamField>
 
-#### region
+<ParamField query="iso_country" type="string">
+  ISO country code filter
+</ParamField>
 
-`string`
+<ParamField query="is_active" type="boolean">
+  Filter by active status
+</ParamField>
 
-Region or state filter, for example `NY`.
-
-#### iso_country
-
-`string`
-
-Two-letter ISO country code, for example `US`.
-
-#### is_active
-
-`boolean`
-
-Filter by active status.
+---
 
 ### Response
 
-#### 200 application/json
+<ResponseField name="success" type="boolean">
+  Whether the request succeeded.
+</ResponseField>
 
-#### success
+<ResponseField name="message" type="string">
+  Human-readable status message.
+</ResponseField>
 
-`boolean` required
+<ResponseField name="data" type="object[]">
+  Returned data.
 
-#### message
+  <Expandable title="data[]">
+    <ResponseField name="id" type="string">
+      Record ID
+    </ResponseField>
 
-`string` required
+    <ResponseField name="telephony_id" type="string">
+      Associated telephony ID
+    </ResponseField>
 
-#### data
+    <ResponseField name="subscription_id" type="string">
+      Associated subscription ID
+    </ResponseField>
 
-`object[]` required
+    <ResponseField name="inbound_trunk_id" type="string">
+      Inbound SIP trunk ID
+    </ResponseField>
 
-#### data[].id
+    <ResponseField name="outbound_trunk_id" type="string">
+      Outbound SIP trunk ID
+    </ResponseField>
 
-`string` required
+    <ResponseField name="number" type="string">
+      Phone number in E.164 format
+    </ResponseField>
 
-#### data[].number
+    <ResponseField name="friendly_name" type="string">
+      Human-readable label
+    </ResponseField>
 
-`string` required
+    <ResponseField name="per_minute_price_inbound" type="integer">
+      Per-minute inbound price
+    </ResponseField>
 
-#### data[].friendly_name
+    <ResponseField name="per_minute_price_outbound" type="integer">
+      Per-minute outbound price
+    </ResponseField>
 
-`string`
+    <ResponseField name="price" type="integer">
+      Monthly price
+    </ResponseField>
 
-#### data[].region
+    <ResponseField name="region" type="string">
+      Region
+    </ResponseField>
 
-`string`
+    <ResponseField name="iso_country" type="string">
+      ISO country code
+    </ResponseField>
 
-#### data[].iso_country
+    <ResponseField name="is_active" type="boolean">
+      Whether the number is active
+    </ResponseField>
 
-`string`
+    <ResponseField name="created_at" type="string">
+      Creation timestamp
+    </ResponseField>
 
-#### data[].is_active
-
-`boolean` required
-
-#### data[].created_at
-
-`string` required
-
-ISO 8601 timestamp.
-
-#### data[].updated_at
-
-`string` required
-
-ISO 8601 timestamp.
+    <ResponseField name="updated_at" type="string">
+      Last update timestamp
+    </ResponseField>
+  </Expandable>
+</ResponseField>
 
 <ResponseExample>
 
 ```json 200
 {
   "success": true,
-  "message": "Purchased numbers retrieved successfully",
+  "message": "Request completed successfully",
   "data": [
     {
-      "id": "uuid-string",
-      "telephony_id": "uuid-string",
-      "subscription_id": "sub_...",
-      "inbound_trunk_id": "uuid-string",
-      "outbound_trunk_id": "uuid-string",
-      "number": "+1234567890",
-      "friendly_name": "Main Support Line",
+      "id": "id_123",
+      "telephony_id": "telephony_123",
+      "subscription_id": "subscription_123",
+      "inbound_trunk_id": "inbound_trunk_123",
+      "outbound_trunk_id": "outbound_trunk_123",
+      "number": "+14155550100",
+      "friendly_name": "Support Bot",
       "per_minute_price_inbound": 1,
       "per_minute_price_outbound": 1,
-      "price": 200,
-      "region": "NY",
+      "price": 1,
+      "region": "example",
       "iso_country": "US",
       "is_active": true,
-      "created_at": "2024-03-01T10:00:00Z",
-      "updated_at": "2024-03-03T12:00:00Z"
+      "created_at": "2026-03-14T12:00:00Z",
+      "updated_at": "2026-03-14T12:00:00Z"
     }
   ]
 }

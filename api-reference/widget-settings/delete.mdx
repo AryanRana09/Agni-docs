@@ -1,43 +1,41 @@
 ---
 title: "Deactivate Widget Settings"
-openapi: "DELETE /api/v1/widget-settings/{id}"
-description: "Deactivate one widget settings record."
+openapi: "DELETE /api/v1/widget-settings/{id}/"
+description: "Deactivate Widget Settings."
 ---
 
 ### Authorizations
 
-#### Authorization
+<ParamField header="X-Api-Key" type="string" required>
+  Your Agni API key. Find it in your [dashboard](https://dashboard.ravan.ai).
+</ParamField>
 
-`string` header `required`
+---
 
-Use `Bearer YOUR_API_KEY`.
+### Path Parameters
 
-### Path parameters
+<ParamField path="id" type="string" required>
+  Widget Settings ID
+</ParamField>
 
-#### id
-
-`integer` required
-
-Widget settings id.
+---
 
 ### Response
 
-#### 200 application/json
+<ResponseField name="success" type="boolean">
+  Whether the request succeeded.
+</ResponseField>
 
-#### success
-
-`boolean` required
-
-#### message
-
-`string` required
+<ResponseField name="message" type="string">
+  Human-readable status message.
+</ResponseField>
 
 <ResponseExample>
 
 ```json 200
 {
   "success": true,
-  "message": "Widget settings deactivated"
+  "message": "Request completed successfully"
 }
 ```
 

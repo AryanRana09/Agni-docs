@@ -1,93 +1,103 @@
 ---
-title: "Update Tool"
-openapi: "PATCH /api/v1/tools/{id}"
-description: "Update an existing tool."
+title: "Update Agent Tool"
+openapi: "PATCH /api/v1/tools/{id}/"
+description: "Update Agent Tool."
 ---
 
 ### Authorizations
 
-#### Authorization
+<ParamField header="X-Api-Key" type="string" required>
+  Your Agni API key. Find it in your [dashboard](https://dashboard.ravan.ai).
+</ParamField>
 
-`string` header `required`
+---
 
-Use `Bearer YOUR_API_KEY`.
+### Path Parameters
 
-### Path parameters
+<ParamField path="id" type="string" required>
+  Tool ID
+</ParamField>
 
-#### id
-
-`integer` required
-
-Tool id.
+---
 
 ### Body
 
-`application/json`
+<ParamField body="name" type="string">
+  Tool name
+</ParamField>
 
-#### organization_id
+<ParamField body="description" type="string">
+  Tool description
+</ParamField>
 
-`string` required
+<ParamField body="type" type="string">
+  Tool type
+</ParamField>
 
-Organization id.
+<ParamField body="definition" type="object">
+  Tool definition schema
+</ParamField>
 
-#### name
-
-`string`
-
-#### description
-
-`string`
-
-#### type
-
-`string`
-
-#### definition
-
-`object`
-
-<RequestExample>
-
-```json
-{
-  "organization_id": "org_123",
-  "name": "Updated Tool",
-  "description": "Updated description",
-  "type": "api",
-  "definition": {}
-}
-```
-
-</RequestExample>
+---
 
 ### Response
 
-#### 200 application/json
+<ResponseField name="success" type="boolean">
+  Whether the request succeeded.
+</ResponseField>
 
-#### success
+<ResponseField name="message" type="string">
+  Human-readable status message.
+</ResponseField>
 
-`boolean` required
+<ResponseField name="data" type="object">
+  Returned data.
 
-#### message
+  <Expandable title="data">
+    <ResponseField name="id" type="string">
+      Unique tool ID
+    </ResponseField>
 
-`string` required
+    <ResponseField name="organization_id" type="string">
+      Organization this tool belongs to
+    </ResponseField>
 
-#### data
+    <ResponseField name="name" type="string">
+      Tool name
+    </ResponseField>
 
-`object` required
+    <ResponseField name="description" type="string">
+      Tool description
+    </ResponseField>
 
-#### data.id
+    <ResponseField name="type" type="string">
+      Tool type (e.g. webhook, function)
+    </ResponseField>
 
-`integer` required
+    <ResponseField name="definition" type="object">
+      Tool definition schema
+    </ResponseField>
+
+    <ResponseField name="is_active" type="boolean">
+      Whether the tool is active
+    </ResponseField>
+  </Expandable>
+</ResponseField>
 
 <ResponseExample>
 
 ```json 200
 {
   "success": true,
-  "message": "Tool updated",
+  "message": "Request completed successfully",
   "data": {
-    "id": 1
+    "id": "id_123",
+    "organization_id": "organization_123",
+    "name": "Support Bot",
+    "description": "Example description",
+    "type": "twilio",
+    "definition": {},
+    "is_active": true
   }
 }
 ```
