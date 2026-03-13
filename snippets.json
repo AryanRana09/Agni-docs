@@ -9,7 +9,7 @@
       {
         "lang": "curl",
         "label": "cURL",
-        "source": "curl -X POST \"https://api.ravan.ai/api/v1/agents\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\n      \"organization_id\": \"org_9f2k1\",\n      \"widget_settings_id\": 12,\n      \"name\": \"Support line\",\n      \"agent_name\": \"Ava\",\n      \"model\": \"gpt-4.1-mini\",\n      \"voice_id\": \"alloy\",\n      \"temperature\": 0.4,\n      \"enable_voicemail_detection\": true,\n      \"ivr_options\": {\n        \"1\": \"sales\",\n        \"2\": \"support\"\n      },\n      \"selected_tools\": {\n        \"crm_lookup\": true\n      },\n      \"start_speaker\": \"agent\"\n    }'"
+        "source": "curl -X POST \"https://development.ravan.ai/api/v1/agents/\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\n      \"organization_id\": \"org_9f2k1\",\n      \"widget_settings_id\": 12,\n      \"name\": \"Support line\",\n      \"agent_name\": \"Ava\",\n      \"model\": \"gpt-4.1-mini\",\n      \"voice_id\": \"alloy\",\n      \"temperature\": 0.4,\n      \"enable_voicemail_detection\": true,\n      \"ivr_options\": {\n        \"1\": \"sales\",\n        \"2\": \"support\"\n      },\n      \"selected_tools\": {\n        \"crm_lookup\": true\n      },\n      \"start_speaker\": \"agent\"\n    }'"
       }
     ],
     "responseExamples": {
@@ -46,7 +46,7 @@
       {
         "lang": "curl",
         "label": "cURL",
-        "source": "curl -X DELETE \"https://api.ravan.ai/api/v1/agents/101?organization_id=org_9f2k1\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\""
+        "source": "curl -X DELETE \"https://development.ravan.ai/api/v1/agents/101?organization_id=org_9f2k1\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\""
       }
     ],
     "responseExamples": {
@@ -66,7 +66,7 @@
       {
         "lang": "curl",
         "label": "cURL",
-        "source": "curl -X GET \"https://api.ravan.ai/api/v1/agents/101?organization_id=org_9f2k1\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\""
+        "source": "curl -X GET \"https://development.ravan.ai/api/v1/agents/101?organization_id=org_9f2k1\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\""
       }
     ],
     "responseExamples": {
@@ -100,7 +100,7 @@
       {
         "lang": "curl",
         "label": "cURL",
-        "source": "curl -X GET \"https://api.ravan.ai/api/v1/agents?organization_id=org_9f2k1&limit=20&offset=0\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\""
+        "source": "curl -X GET \"https://development.ravan.ai/api/v1/agents?organization_id=org_9f2k1&limit=20&offset=0\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\""
       }
     ],
     "responseExamples": {
@@ -138,7 +138,7 @@
       {
         "lang": "curl",
         "label": "cURL",
-        "source": "curl -X PATCH \"https://api.ravan.ai/api/v1/agents/101/status\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\n      \"organization_id\": \"org_9f2k1\",\n      \"status\": \"AGENT_STATUS_INACTIVE\"\n    }'"
+        "source": "curl -X PATCH \"https://development.ravan.ai/api/v1/agents/101/status\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\n      \"organization_id\": \"org_9f2k1\",\n      \"status\": \"AGENT_STATUS_INACTIVE\"\n    }'"
       }
     ],
     "responseExamples": {
@@ -167,7 +167,7 @@
       {
         "lang": "curl",
         "label": "cURL",
-        "source": "curl -X PATCH \"https://api.ravan.ai/api/v1/agents/101\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\n      \"organization_id\": \"org_9f2k1\",\n      \"name\": \"Support line - EN\",\n      \"temperature\": 0.35,\n      \"enable_voicemail_detection\": true,\n      \"analysis_summary_prompt\": \"Summarize blockers and follow-ups.\",\n      \"start_speaker\": \"agent\"\n    }'"
+        "source": "curl -X PATCH \"https://development.ravan.ai/api/v1/agents/101\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\n      \"organization_id\": \"org_9f2k1\",\n      \"name\": \"Support line - EN\",\n      \"temperature\": 0.35,\n      \"enable_voicemail_detection\": true,\n      \"analysis_summary_prompt\": \"Summarize blockers and follow-ups.\",\n      \"start_speaker\": \"agent\"\n    }'"
       }
     ],
     "responseExamples": {
@@ -202,7 +202,7 @@
       {
         "lang": "curl",
         "label": "cURL",
-        "source": "curl -X POST \"https://api.ravan.ai/api/v1/phone-numbers/buy\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\n      \"phone_number\": \"+14155552671\",\n      \"price\": 1.0,\n      \"per_minute_price_inbound\": 1,\n      \"per_minute_price_outbound\": 2\n    }'"
+        "source": "curl -X POST \"https://development.ravan.ai/api/v1/phone-numbers/buy\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\n      \"phone_number\": \"+14155552671\",\n      \"price\": 1.0,\n      \"per_minute_price_inbound\": 1,\n      \"per_minute_price_outbound\": 2\n    }'"
       }
     ],
     "responseExamples": {
@@ -236,7 +236,7 @@
       {
         "lang": "curl",
         "label": "cURL",
-        "source": "curl -X POST \"https://api.ravan.ai/api/v1/create/telephony\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\n      \"type\": \"twilio\",\n      \"owner_type\": \"organization\",\n      \"friendly_name\": \"My Twilio Account\",\n      \"client_id\": \"ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\",\n      \"client_secret\": \"your_auth_token_here\"\n    }'"
+        "source": "curl -X POST \"https://development.ravan.ai/api/v1/create/telephony\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\n      \"type\": \"twilio\",\n      \"owner_type\": \"organization\",\n      \"friendly_name\": \"My Twilio Account\",\n      \"client_id\": \"ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\",\n      \"client_secret\": \"your_auth_token_here\"\n    }'"
       }
     ],
     "responseExamples": {
@@ -268,7 +268,7 @@
       {
         "lang": "curl",
         "label": "cURL",
-        "source": "curl -X POST \"https://api.ravan.ai/api/v1/phone-numbers/import\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\n      \"phone\": \"+14155552671\",\n      \"type\": \"sip\",\n      \"name\": \"Main SIP Trunk\",\n      \"termination_uri\": \"sip:14155552671@sip.example.com\",\n      \"sip_username\": \"admin\",\n      \"sip_password\": \"secr3t\"\n    }'"
+        "source": "curl -X POST \"https://development.ravan.ai/api/v1/phone-numbers/import\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\n      \"phone\": \"+14155552671\",\n      \"type\": \"sip\",\n      \"name\": \"Main SIP Trunk\",\n      \"termination_uri\": \"sip:14155552671@sip.example.com\",\n      \"sip_username\": \"admin\",\n      \"sip_password\": \"secr3t\"\n    }'"
       }
     ],
     "responseExamples": {
@@ -302,7 +302,7 @@
       {
         "lang": "curl",
         "label": "cURL",
-        "source": "curl -X GET \"https://api.ravan.ai/api/v1/available-numbers/US?page_size=10&region=CA\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\""
+        "source": "curl -X GET \"https://development.ravan.ai/api/v1/available-numbers/US?page_size=10&region=CA\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\""
       }
     ],
     "responseExamples": {
@@ -335,7 +335,7 @@
       {
         "lang": "curl",
         "label": "cURL",
-        "source": "curl -X GET \"https://api.ravan.ai/api/v1/list-phone-numbers?iso_country=US&is_active=true\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\""
+        "source": "curl -X GET \"https://development.ravan.ai/api/v1/list-phone-numbers?iso_country=US&is_active=true\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\""
       }
     ],
     "responseExamples": {
@@ -374,7 +374,7 @@
       {
         "lang": "curl",
         "label": "cURL",
-        "source": "curl -X GET \"https://api.ravan.ai/api/v1/twilio-owned-numbers\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\""
+        "source": "curl -X GET \"https://development.ravan.ai/api/v1/twilio-owned-numbers\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\""
       }
     ],
     "responseExamples": {
@@ -406,7 +406,7 @@
       {
         "lang": "curl",
         "label": "cURL",
-        "source": "curl -X DELETE \"https://api.ravan.ai/api/v1/phone-numbers/+14155552671/release\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\""
+        "source": "curl -X DELETE \"https://development.ravan.ai/api/v1/phone-numbers/+14155552671/release\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\""
       }
     ],
     "responseExamples": {
@@ -435,7 +435,7 @@
       {
         "lang": "curl",
         "label": "cURL",
-        "source": "curl -X POST \"https://api.ravan.ai/api/v1/tools\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\n      \"organization_id\": \"org_9f2k1\",\n      \"name\": \"crm_lookup\",\n      \"description\": \"Fetch customer profile from CRM\",\n      \"type\": \"http\",\n      \"definition\": {\n        \"url\": \"https://api.example.com/customers/{phone}\",\n        \"method\": \"GET\"\n      }\n    }'"
+        "source": "curl -X POST \"https://development.ravan.ai/api/v1/tools\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\n      \"organization_id\": \"org_9f2k1\",\n      \"name\": \"crm_lookup\",\n      \"description\": \"Fetch customer profile from CRM\",\n      \"type\": \"http\",\n      \"definition\": {\n        \"url\": \"https://api.example.com/customers/{phone}\",\n        \"method\": \"GET\"\n      }\n    }'"
       }
     ],
     "responseExamples": {
@@ -471,7 +471,7 @@
       {
         "lang": "curl",
         "label": "cURL",
-        "source": "curl -X DELETE \"https://api.ravan.ai/api/v1/tools/21?organization_id=org_9f2k1\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\""
+        "source": "curl -X DELETE \"https://development.ravan.ai/api/v1/tools/21?organization_id=org_9f2k1\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\""
       }
     ],
     "responseExamples": {
@@ -491,7 +491,7 @@
       {
         "lang": "curl",
         "label": "cURL",
-        "source": "curl -X GET \"https://api.ravan.ai/api/v1/tools/21?organization_id=org_9f2k1\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\""
+        "source": "curl -X GET \"https://development.ravan.ai/api/v1/tools/21?organization_id=org_9f2k1\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\""
       }
     ],
     "responseExamples": {
@@ -527,7 +527,7 @@
       {
         "lang": "curl",
         "label": "cURL",
-        "source": "curl -X GET \"https://api.ravan.ai/api/v1/tools?organization_id=org_9f2k1&limit=20&offset=0\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\""
+        "source": "curl -X GET \"https://development.ravan.ai/api/v1/tools?organization_id=org_9f2k1&limit=20&offset=0\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\""
       }
     ],
     "responseExamples": {
@@ -570,7 +570,7 @@
       {
         "lang": "curl",
         "label": "cURL",
-        "source": "curl -X PATCH \"https://api.ravan.ai/api/v1/tools/21\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\n      \"organization_id\": \"org_9f2k1\",\n      \"name\": \"crm_lookup\",\n      \"description\": \"Fetch and summarize customer profile\",\n      \"type\": \"http\",\n      \"definition\": {\n        \"url\": \"https://api.example.com/customers/{phone}\",\n        \"method\": \"GET\",\n        \"timeout_ms\": 2000\n      }\n    }'"
+        "source": "curl -X PATCH \"https://development.ravan.ai/api/v1/tools/21\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\n      \"organization_id\": \"org_9f2k1\",\n      \"name\": \"crm_lookup\",\n      \"description\": \"Fetch and summarize customer profile\",\n      \"type\": \"http\",\n      \"definition\": {\n        \"url\": \"https://api.example.com/customers/{phone}\",\n        \"method\": \"GET\",\n        \"timeout_ms\": 2000\n      }\n    }'"
       }
     ],
     "responseExamples": {
@@ -602,7 +602,7 @@
       {
         "lang": "curl",
         "label": "cURL",
-        "source": "curl -X POST \"https://api.ravan.ai/api/v1/widget-settings\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\n      \"bot_name\": \"Ava\",\n      \"bot_auto_start\": true,\n      \"bot_position\": \"BOT_POSITION_BOTTOM_RIGHT\",\n      \"bot_logo\": \"https://cdn.ravan.ai/bot-logo.svg\",\n      \"custom_form_fields\": {\n        \"company\": {\n          \"type\": \"text\",\n          \"required\": true\n        }\n      },\n      \"theme\": {\n        \"primary\": \"#16A34A\"\n      },\n      \"language\": \"en\",\n      \"consent_content\": \"By continuing, you agree to recording.\",\n      \"consent_title\": \"Consent\"\n    }'"
+        "source": "curl -X POST \"https://development.ravan.ai/api/v1/widget-settings\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\n      \"bot_name\": \"Ava\",\n      \"bot_auto_start\": true,\n      \"bot_position\": \"BOT_POSITION_BOTTOM_RIGHT\",\n      \"bot_logo\": \"https://cdn.ravan.ai/bot-logo.svg\",\n      \"custom_form_fields\": {\n        \"company\": {\n          \"type\": \"text\",\n          \"required\": true\n        }\n      },\n      \"theme\": {\n        \"primary\": \"#16A34A\"\n      },\n      \"language\": \"en\",\n      \"consent_content\": \"By continuing, you agree to recording.\",\n      \"consent_title\": \"Consent\"\n    }'"
       }
     ],
     "responseExamples": {
@@ -636,7 +636,7 @@
       {
         "lang": "curl",
         "label": "cURL",
-        "source": "curl -X DELETE \"https://api.ravan.ai/api/v1/widget-settings/12\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\""
+        "source": "curl -X DELETE \"https://development.ravan.ai/api/v1/widget-settings/12\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\""
       }
     ],
     "responseExamples": {
@@ -656,7 +656,7 @@
       {
         "lang": "curl",
         "label": "cURL",
-        "source": "curl -X GET \"https://api.ravan.ai/api/v1/widget-settings/12\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\""
+        "source": "curl -X GET \"https://development.ravan.ai/api/v1/widget-settings/12\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\""
       }
     ],
     "responseExamples": {
@@ -690,7 +690,7 @@
       {
         "lang": "curl",
         "label": "cURL",
-        "source": "curl -X GET \"https://api.ravan.ai/api/v1/widget-settings\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\""
+        "source": "curl -X GET \"https://development.ravan.ai/api/v1/widget-settings\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\""
       }
     ],
     "responseExamples": {
@@ -724,7 +724,7 @@
       {
         "lang": "curl",
         "label": "cURL",
-        "source": "curl -X PATCH \"https://api.ravan.ai/api/v1/widget-settings/12\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\n      \"bot_name\": \"Ava Support\",\n      \"bot_auto_start\": false,\n      \"bot_position\": \"BOT_POSITION_BOTTOM_LEFT\",\n      \"bot_logo\": \"https://cdn.ravan.ai/bot-logo-v2.svg\",\n      \"custom_form_fields\": {\n        \"company\": {\n          \"type\": \"text\",\n          \"required\": true\n        },\n        \"email\": {\n          \"type\": \"email\",\n          \"required\": true\n        }\n      },\n      \"theme\": {\n        \"primary\": \"#15803D\"\n      },\n      \"language\": \"en\"\n    }'"
+        "source": "curl -X PATCH \"https://development.ravan.ai/api/v1/widget-settings/12\" \\\n    -H \"Authorization: Bearer <token>\" \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\n      \"bot_name\": \"Ava Support\",\n      \"bot_auto_start\": false,\n      \"bot_position\": \"BOT_POSITION_BOTTOM_LEFT\",\n      \"bot_logo\": \"https://cdn.ravan.ai/bot-logo-v2.svg\",\n      \"custom_form_fields\": {\n        \"company\": {\n          \"type\": \"text\",\n          \"required\": true\n        },\n        \"email\": {\n          \"type\": \"email\",\n          \"required\": true\n        }\n      },\n      \"theme\": {\n        \"primary\": \"#15803D\"\n      },\n      \"language\": \"en\"\n    }'"
       }
     ],
     "responseExamples": {
