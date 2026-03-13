@@ -63,6 +63,16 @@
             ]
           },
           {
+            "group": "Widget Settings API",
+            "pages": [
+              "api-reference/widget-settings/get",
+              "api-reference/widget-settings/list",
+              "api-reference/widget-settings/create",
+              "api-reference/widget-settings/update",
+              "api-reference/widget-settings/delete"
+            ]
+          },
+          {
             "group": "Phone Number & Telephony API",
             "pages": [
               "api-reference/telephony/list-available-numbers",
@@ -72,6 +82,45 @@
               "api-reference/telephony/import-number",
               "api-reference/telephony/create-telephony",
               "api-reference/telephony/list-twilio-numbers"
+            ]
+          },
+          {
+            "group": "Appointment API",
+            "pages": [
+              "api-reference/appointments/manage-ghl",
+              "api-reference/appointments/manage-calcom"
+            ]
+          },
+          {
+            "group": "GHL Integration API",
+            "pages": [
+              "api-reference/ghl/list-appointments",
+              "api-reference/ghl/get-appointment",
+              "api-reference/ghl/oauth-authorize",
+              "api-reference/ghl/oauth-callback",
+              "api-reference/ghl/setup-status",
+              "api-reference/ghl/list-calendars",
+              "api-reference/ghl/get-agent-by-calendar",
+              "api-reference/ghl/disconnect"
+            ]
+          },
+          {
+            "group": "Cal.com Integration API",
+            "pages": [
+              "api-reference/calcom/oauth-connect",
+              "api-reference/calcom/oauth-callback",
+              "api-reference/calcom/status",
+              "api-reference/calcom/list-event-types",
+              "api-reference/calcom/lookup-event-type",
+              "api-reference/calcom/list-appointments",
+              "api-reference/calcom/disconnect"
+            ]
+          },
+          {
+            "group": "Health API",
+            "pages": [
+              "api-reference/health/health",
+              "api-reference/health/ready"
             ]
           }
         ]
