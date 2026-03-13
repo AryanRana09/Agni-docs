@@ -63,16 +63,6 @@
             ]
           },
           {
-            "group": "Widget Settings API",
-            "pages": [
-              "api-reference/widget-settings/get",
-              "api-reference/widget-settings/list",
-              "api-reference/widget-settings/create",
-              "api-reference/widget-settings/update",
-              "api-reference/widget-settings/delete"
-            ]
-          },
-          {
             "group": "Phone Number & Telephony API",
             "pages": [
               "api-reference/telephony/list-available-numbers",
@@ -116,7 +106,7 @@
     "primary": {
       "type": "button",
       "label": "Login",
-      "href": "https://dashboard.ravan.ai"
+      "href": "https://app.ravan.ai"
     }
   },
   "contextual": {
