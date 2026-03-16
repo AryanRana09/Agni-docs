@@ -10,7 +10,7 @@
   "favicon": "/favicon.svg",
   "api": {
     "mdx": {
-      "server": "https://development.ravan.ai",
+      "server": "https://api.ravan.ai",
       "auth": {
         "method": "key",
         "name": "X-Api-Key"

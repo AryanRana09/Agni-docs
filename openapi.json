@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "https://development.ravan.ai"
+      "url": "https://api.ravan.ai"
     }
   ],
   "security": [
@@ -433,7 +433,7 @@
         }
       }
     },
-    "/api/v1/available-numbers/{iso_country}/": {
+    "/api/v1/phone-numbers/available-numbers/{iso_country}/": {
       "get": {
         "tags": ["PhoneService"],
         "summary": "List Available Numbers",
@@ -1842,3 +1842,4 @@
     }
   }
 }
+
