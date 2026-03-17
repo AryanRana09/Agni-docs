@@ -522,7 +522,7 @@
         }
       }
     },
-    "/api/v1/list-phone-numbers/": {
+    "/api/v1/phone-numbers/list": {
       "get": {
         "tags": ["PhoneService"],
         "summary": "List Purchased Numbers",
