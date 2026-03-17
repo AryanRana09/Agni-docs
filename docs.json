@@ -40,7 +40,8 @@
               "guides/agents",
               "guides/tools",
               "guides/phone-numbers",
-              "guides/billing"
+              "guides/billing",
+              "guides/settings"
             ]
           }
         ]
