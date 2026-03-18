@@ -28,18 +28,38 @@ At the top of the Analytics page, four high-level metrics give you an immediate 
   </Card>
 </CardGroup>
 
+---
+
 ## Visualization & Trends
 
-Agni provides four interactive charts to help you visualize data trends and optimize your agents:
+Agni provides four interactive charts to help you visualize data trends and optimize your agents. These charts automatically update based on your selected timeframe.
 
-* **Usage Trend:** Tracks total voice minutes consumed over weekly or monthly intervals. Because Agni operates on a flat $0.07/min pricing model, this chart directly correlates to your platform spend.
-* **Call Volume:** Visualizes the frequency of calls over your chosen time period, helping you identify peak traffic hours and concurrency demands.
-* **Outcomes:** A comparative breakdown of successful versus failed calls, allowing you to quickly spot routing issues or prompt inefficiencies.
-* **Agent Performance:** Compares success rates across different agent deployments. Use this to A/B test system prompts, voices, or tool configurations.
+<CardGroup cols={2}>
+  <Card title="Usage Trend" icon="chart-line">
+    Tracks total voice minutes consumed over weekly or monthly intervals. Because Agni operates on a flat $0.07/min pricing model, this chart directly correlates to your platform spend.
+  </Card>
+  <Card title="Call Volume" icon="chart-bar">
+    Visualizes the frequency of calls over your chosen time period, helping you identify peak traffic hours and concurrency demands.
+  </Card>
+  <Card title="Outcomes" icon="chart-pie">
+    A comparative breakdown of successful versus failed calls, allowing you to quickly spot routing issues or prompt inefficiencies.
+  </Card>
+  <Card title="Agent Performance" icon="ranking-star">
+    Compares success rates across different agent deployments. Use this to A/B test system prompts, voices, or tool configurations.
+  </Card>
+</CardGroup>
+
+---
 
 ## Filtering and Exporting Data
 
-In the top right corner of the dashboard, you can control the scope of your analytics:
+In the top right corner of the dashboard, you can control the scope of your analytics to generate custom reports:
 
-1. **Date Range Picker:** Filter your data by predefined ranges (e.g., *Last 30 days*, *Last 7 days*) or select a custom timeframe.
-2. **Export:** Click the **Export** button to download your current analytics view as a CSV file for ingestion into your CRM, billing software, or internal reporting tools.
+<Steps>
+  <Step title="Filter by Date">
+    Use the **Date Range Picker** to filter your data by predefined ranges (e.g., *Last 30 days*, *Last 7 days*) or select a completely custom timeframe.
+  </Step>
+  <Step title="Export to CSV">
+    Click the **Export** button to download your current analytics view as a CSV file. You can easily ingest this data into your CRM, billing software, or internal reporting tools.
+  </Step>
+</Steps>
